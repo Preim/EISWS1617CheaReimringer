@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <form action="/profiles" method="post" target="hiddenFrame">
+    	<button class="">submit data</button>
+    </form>
+
+    <form name='form' id='form' action='/profiles' method='POST'>
+    	<button id="submit">submit
+    	</button>
+    </form>
+   <script type="text/javascript">
+    // Definition der 'action'
+    $('#form').submit(function(event) {
+        //Verhindert das Standard-Verhalten von submit
+        event.preventDefault();
+        // Formulardaten werden als JSON Objekt gespeichert
+        var data = {
+        	name: "Test",
+        	id: "jsdkfj34lnj"
+        };
+        // post auf Ressource '/profiles'
+        var ajaxPost = $.ajax({
+            type: 'POST',
+            url: '/profiles',
+            data: JSON.stringify(data),
+            contentType: 'application/json'
+        });
+        // Popup. Serverseitiges res.writeHead(200) erforderlich
+        ajaxPost.done(function() {
+            alert('Done.('+ JSON.stringify(data) + ')');
+            // Formular wird zurueckgesetzt
+            $('#form')[0].reset();
+            location.href = "/";
+        });
+        // Popup mit Fehlermeldung wenn Promise fehlgeschlagen
+        ajaxPost.fail(function(e) {
+            alert('Fail. (' + JSON.stringify(e) + ')');
+        });
+    });
+	</script>
+    
+  <iframe name="hiddenFrame" class="hide"></iframe>
+  </body>
+</html>
