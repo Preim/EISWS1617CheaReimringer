@@ -45,12 +45,12 @@ router.post('/profiles', function(req, res){
 router.get('/profiles/:id', function(req, res){
 	//find ressource 'profile :id'
 });
-router.post('/events', function(req. res){
+router.post('/events', function(req, res){
 	//post data to ressource '/events'
 });
 
 router.get('/notification', function(req, res){
-	
+
 });
 
 
