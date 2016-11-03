@@ -14,6 +14,11 @@
     </form>
 
     <form name='form' id='form' action='/profiles' method='POST'>
+        <input id="username" type="text" value="dummy">
+        <input id="id" type="text" value="1234">
+        <input id="bikesports" type="text" value="Mountainbike,Rennrad">
+        <input id="averageSpeed" type="number" value="30">
+        <input id="averageSessionDistance" type="number" value="10">
     	<button id="submit">submit
     	</button>
     </form>
@@ -23,9 +28,13 @@
         //Verhindert das Standard-Verhalten von submit
         event.preventDefault();
         // Formulardaten werden als JSON Objekt gespeichert
+        var bikesports_array = $('#bikesports').val().split(',');
         var data = {
-        	name: "Test",
-        	id: "jsdkfj34lnj"
+            id: $('#id').val(),
+            username: $('#username').val(),
+            bikesports: bikesports_array,
+            averageSpeed: parseInt($('#averageSpeed').val()),
+            averageSessionDistance: parseInt($('#averageSessionDistance').val())
         };
         // post auf Ressource '/profiles'
         var ajaxPost = $.ajax({
