@@ -27,8 +27,10 @@ router.post('/profiles', function(req, res){
 	var location = req.body.location;
 	var speed = req.body.averageSpeed;
 	console.log(matching_sports);
+	var results;
 	profilesCollection.find({bikesports: matching_sports}).toArray(function(error, result){
 		console.log(result);
+		results = result;
 
 	});
 	console.log("data: " + JSON.stringify(req.body));
@@ -39,6 +41,8 @@ router.post('/profiles', function(req, res){
 	//Event erstellen und vorschlagen
 
 	res.writeHead(200, 'OK');
+	res.setHeader('Content-Type','application/json');
+	res.send(JSON.stringify(results))
 	res.end();
 })
 
