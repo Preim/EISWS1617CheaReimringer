@@ -40,17 +40,29 @@ router.post('/profiles', function(req, res){
 
 	//Event erstellen und vorschlagen
 
-	res.writeHead(200, 'OK');
+	//res.writeHead(200, 'OK');
 	res.setHeader('Content-Type','application/json');
-	res.send(JSON.stringify(results))
+	res.send(JSON.stringify(results));
 	res.end();
 })
 
 router.get('/profiles/:id', function(req, res){
 	//find ressource 'profile :id'
+	profilesCollection.find({id: req.params.id}).toArray(function(error, result){
+		console.log(result);
+	});
+	res.setHeader('Content-Type','application/json');
+	res.send(JSON.stringify(result));
+	res.end();
 });
 router.post('/events', function(req, res){
 	//post data to ressource '/events'
+	eventsCollection.update({id: req.body.id}, req.body, {upsert: true}, function(error){
+		if (error) {
+			return console.log('could not update');
+		};
+		console.log('updated. (upsert: true)');
+	});
 });
 
 router.get('/notification', function(req, res){

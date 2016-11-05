@@ -39,7 +39,7 @@ public class MatchingActivity extends AppCompatActivity {
         bSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new PostDataTask().execute("http://localhost:3000/profiles");
+                new PostDataTask().execute("http://192.168.0.101:3000/profiles");
 
             }
         });
