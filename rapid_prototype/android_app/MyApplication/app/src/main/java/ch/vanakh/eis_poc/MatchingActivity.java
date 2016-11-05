@@ -35,7 +35,7 @@ public class MatchingActivity extends AppCompatActivity {
         final EditText input_username = (EditText) findViewById(R.id.input_username);
         final EditText input_averageSpeed = (EditText) findViewById(R.id.input_averageSpeed);
         assert bSubmit != null;
-
+        //new PostDataTask().execute("http://192.168.0.101:3000/profiles");
         bSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +81,12 @@ public class MatchingActivity extends AppCompatActivity {
                 dataToSend.put("bikesports", new JSONArray(list) );
                 dataToSend.put("averageSpeed", input_averageSpeed.getText().toString().trim());
                 dataToSend.put("averageSessionDistance", 20);
+
+                /*dataToSend.put("id", "7553" );
+                dataToSend.put("username", "Test123");
+                dataToSend.put("bikesports", new JSONArray(list) );
+                dataToSend.put("averageSpeed", 34);
+                dataToSend.put("averageSessionDistance", 20);*/
 
                 //init and config request, then connect to server
                 URL url = new URL(urlPath);
