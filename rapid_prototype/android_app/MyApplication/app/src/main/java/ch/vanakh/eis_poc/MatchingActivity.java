@@ -8,6 +8,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,13 +28,22 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MatchingActivity extends AppCompatActivity {
+
+    private TextView mResult;
+    private ListView lv;
+
+    ArrayList<HashMap<String, String>> resultsList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matching);
+        resultsList = new ArrayList<>();
+
+        lv = (ListView) findViewById(R.id.list);
 
         final Button bSubmit = (Button) findViewById(R.id.b_submit);
         final EditText input_id = (EditText) findViewById(R.id.input_id);
@@ -40,14 +54,27 @@ public class MatchingActivity extends AppCompatActivity {
         bSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new PostDataTask().execute("http://192.168.0.101:3000/profiles");
+                new PostDataTask().execute("http://192.168.0.104:3000/profiles");
+                //mResult = (TextView) findViewById(R.id.tv_result);
 
             }
         });
     }
 
     class PostDataTask extends AsyncTask<String, Void, String> {
+
+
+
         ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog = new ProgressDialog(MatchingActivity.this);
+            progressDialog.setMessage("Inserting data...");
+            progressDialog.show();
+        }
 
 
         @Override
@@ -61,6 +88,26 @@ public class MatchingActivity extends AppCompatActivity {
             }
         }
 
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            //mResult.setText(result);
+
+
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+
+            ListAdapter adapter = new SimpleAdapter(
+                    MatchingActivity.this, resultsList,
+                    R.layout.list_item, new String[]{"id", "username", "averageSpeed", "averageDistance"},
+                    new int[]{R.id.id, R.id.username, R.id.averageSpeed, R.id.averageDistance});
+
+            lv.setAdapter(adapter);
+
+        }
+
 
         private String postData(String urlPath) throws IOException, JSONException {
             StringBuilder result = new StringBuilder();
@@ -70,11 +117,10 @@ public class MatchingActivity extends AppCompatActivity {
             final EditText input_username = (EditText) findViewById(R.id.input_username);
             final EditText input_averageSpeed = (EditText) findViewById(R.id.input_averageSpeed);
 
-
             try{
                 ArrayList<String> list = new ArrayList<String>();
-                list.add("Rennrad");
-                list.add("Mountainbike");
+                list.add("BMX");
+                list.add("Einrad");
                 //Create data to send to server
                 JSONObject dataToSend = new JSONObject();
                 dataToSend.put("id", input_id.getText().toString().trim() );
@@ -82,12 +128,6 @@ public class MatchingActivity extends AppCompatActivity {
                 dataToSend.put("bikesports", new JSONArray(list) );
                 dataToSend.put("averageSpeed", Integer.parseInt(input_averageSpeed.getText().toString()));
                 dataToSend.put("averageSessionDistance", 20);
-
-                /*dataToSend.put("id", "7553" );
-                dataToSend.put("username", "Test123");
-                dataToSend.put("bikesports", new JSONArray(list) );
-                dataToSend.put("averageSpeed", 34);
-                dataToSend.put("averageSessionDistance", 20);*/
 
                 //init and config request, then connect to server
                 URL url = new URL(urlPath);
@@ -112,6 +152,51 @@ public class MatchingActivity extends AppCompatActivity {
                 while ((line = bufferedReader.readLine()) != null){
                     result.append(line).append("\n");
                 }
+                try {
+
+
+                    JSONObject jsonObj = new JSONObject(result.toString());
+
+                    JSONArray results = jsonObj.getJSONArray("results");
+
+                    for (int i = 0; i < results.length(); i++) {
+                        JSONObject r = results.getJSONObject(i);
+
+                        String id = r.getString("id");
+                        String username = r.getString("username");
+                        String averageSpeed = r.getString("averageSpeed");
+                        String averageDistance = r.getString("averageSessionDistance");
+                        //String bikeSports = r.getJSONObject("bikesports").toString();
+
+                        HashMap<String, String> user = new HashMap<>();
+
+                        user.put("id", id);
+                        user.put("username", username);
+                        user.put("averageSpeed", averageSpeed);
+                        //user.put("bikeSports", bikeSports);
+                        user.put("averageDistance", averageDistance);
+
+                        //adding user to result list
+                        resultsList.add(user);
+                    }
+                }catch (final JSONException e) {
+                    Log.e("parsingError", "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+
+                }
+
+
+
+
+                //Log.d("jsondebug", result.toString());
             } finally {
                 if (bufferedReader != null){
                     bufferedReader.close();
@@ -120,8 +205,8 @@ public class MatchingActivity extends AppCompatActivity {
                     bufferedWriter.close();
                 }
             }
-            System.out.printf(result.toString());
-            //Log.d(result.toString());
+            //System.out.printf(result.toString());
+
             return result.toString();
         }
     }

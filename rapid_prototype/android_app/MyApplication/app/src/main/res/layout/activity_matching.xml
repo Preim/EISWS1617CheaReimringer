@@ -73,4 +73,15 @@
         android:text="Submit JSON"
         android:id="@+id/b_submit" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_result"
+        android:text="test" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/list" />
+
 </LinearLayout>
