@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -79,7 +80,7 @@ public class MatchingActivity extends AppCompatActivity {
                 dataToSend.put("id", input_id.getText().toString().trim() );
                 dataToSend.put("username", input_username.getText().toString().trim());
                 dataToSend.put("bikesports", new JSONArray(list) );
-                dataToSend.put("averageSpeed", input_averageSpeed.getText().toString().trim());
+                dataToSend.put("averageSpeed", Integer.parseInt(input_averageSpeed.getText().toString()));
                 dataToSend.put("averageSessionDistance", 20);
 
                 /*dataToSend.put("id", "7553" );
@@ -120,6 +121,7 @@ public class MatchingActivity extends AppCompatActivity {
                 }
             }
             System.out.printf(result.toString());
+            //Log.d(result.toString());
             return result.toString();
         }
     }
