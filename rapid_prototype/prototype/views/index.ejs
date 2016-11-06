@@ -21,8 +21,9 @@
         <input id="bikesports" type="text" value="Mountainbike,Rennrad">
         <input id="averageSpeed" type="number" value="30">
         <input id="averageSessionDistance" type="number" value="10">
-    	<button id="submit">submit
+    	<button id="submit" >submit
     	</button>
+        <button id="submit2" onclick="send()">Send</button>
     </form>
    <script type="text/javascript">
     // Definition der 'action'
@@ -44,19 +45,29 @@
             url: '/profiles',
             data: JSON.stringify(data),
             contentType: 'application/json'
-        });
-        // Popup. Serverseitiges res.writeHead(200) erforderlich
-        ajaxPost.done(function() {
+            //dataType: "json"
+        }).done(function(data) {
             alert('Done.('+ JSON.stringify(data) + ')');
             // Formular wird zurueckgesetzt
             $('#form')[0].reset();
             location.href = "/";
-        });
-        // Popup mit Fehlermeldung wenn Promise fehlgeschlagen
-        ajaxPost.fail(function(e) {
+        }).fail(function(e) {
             alert('Fail. (' + JSON.stringify(e) + ')');
+
         });
     });
+    function send()
+    {
+        $.ajax({
+            type: "post",
+            url: '/profiles',
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data)
+        }).done(function(data) {
+            alert("response" + data);
+        });
+    }
 	</script>
     
   <iframe name="hiddenFrame" class="hide"></iframe>
