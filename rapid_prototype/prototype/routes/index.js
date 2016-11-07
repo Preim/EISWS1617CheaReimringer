@@ -45,7 +45,7 @@ router.post('/profiles', function(req, res){
 	var maxSpeed = medianSpeed + 2;
 	console.log(matching_sports);
 	var resultsArray;
-	profilesCollection.find({ $and: [{bikesports: matching_sports}, {averageSpeed: {$gte: minSpeed}},{averageSpeed: {$lte: maxSpeed}}]}).toArray(function(error, results){
+	profilesCollection.find({ $and: [{bikesports: matching_sports}, {averageSpeed: {$gte: minSpeed}},{averageSpeed: {$lte: maxSpeed}},]}).toArray(function(error, results){
     	if (error)
     		next(error);
     	else{

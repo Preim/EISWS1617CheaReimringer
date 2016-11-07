@@ -54,7 +54,7 @@ public class MatchingActivity extends AppCompatActivity {
         bSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new PostDataTask().execute("http://192.168.0.104:3000/profiles");
+                new PostDataTask().execute("http://localhost:3000/profiles");
                 //mResult = (TextView) findViewById(R.id.tv_result);
 
             }
