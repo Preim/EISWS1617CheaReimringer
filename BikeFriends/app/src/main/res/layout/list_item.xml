@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/eventName"
+        android:layout_width="192dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="2dip"
+        android:textColor="@color/colorAccent"
+        android:text="Rundtour am Rhein"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/eventDate" />
+
+    <TextView
+        android:id="@+id/eventOrt"
+        android:textColor="#5d5d5d"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eventName"
+        android:layout_alignParentStart="true"
+        android:text="Cologne"
+        android:layout_width="200dp"
+        android:layout_toStartOf="@+id/eventDate" />
+
+    <TextView
+        android:id="@+id/eventTime"
+        android:layout_height="wrap_content"
+        android:textColor="#5d5d5d"
+        android:textStyle="bold"
+        android:layout_width="300dp"
+        android:layout_below="@+id/eventOrt"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/eventDate"
+        android:text="18:00 - 22:00" />
+
+    <TextView
+        android:id="@+id/eventDate"
+        android:layout_width="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_height="50dp"
+        android:textSize="30sp"
+        android:text="30 Dec" />
+
+</RelativeLayout>
