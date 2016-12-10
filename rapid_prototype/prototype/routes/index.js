@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoDB = require('mongoskin');
+var BSON = require('mongodb').BSONPure;
 var db =mongoDB.db('mongodb://localhost/mydb?auto_reconnect=true',{safe: true});
 
 db.bind('profiles');
@@ -12,6 +13,10 @@ db.bind('events');
 var eventsCollection = db.events;
 
 
+router.get('/', function(req, res, next) {
+	res.render('index', { title: 'Express' });
+});
+
 
 /* GET home page. */
 router.get('/profiles', function (req, res, next) {
@@ -19,16 +24,14 @@ router.get('/profiles', function (req, res, next) {
         if (error)
             next(error);
         else{
-        	console.log(result)
+        	console.log(result);
             res.writeHead(200, {'Content-Type': 'application/json'});
             res.end(JSON.stringify(result));
         };
     });
 });
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
 
+/* GET /profiles */
 router.post('/profiles', function(req, res){
 	// Update. Wenn nicht existent, insert.
 	profilesCollection.update({id: req.body.id}, req.body, {upsert: true}, function(error){
@@ -41,7 +44,7 @@ router.post('/profiles', function(req, res){
 
 	//matching kriterien festlegen
 	// Matchingkriterien: Gemeinsame Radsportart, Durchschnitliche Geschwindigkeit ist min. 2km/h bzw. max. 2km/h groesser als medianSpeed
-	var matching_sports = req.body.bikesports[0]
+	var matching_sports = req.body.bikesports[0];
 	var location = req.body.location;
 	var medianSpeed = req.body.averageSpeed;
 	var minSpeed = medianSpeed - 2;
@@ -62,24 +65,30 @@ router.post('/profiles', function(req, res){
     		res.end(JSON.stringify(jsonObject));
     	};
 	});
-})
-
-router.post('/profiles', function(req, res){
-	profilesCollection.
-})
-
-
-/*router.get('/profiles/:id', function(req, res){
-	//find ressource 'profile :id'
-	profilesCollection.find({id: req.params.id}).toArray(function(error, result){
-		console.log(result);
-	});
-	res.setHeader('Content-Type','application/json');
-	res.send(JSON.stringify(result));
-	res.end();
 });
 
-router.post('/events', function(req, res){
+
+
+router.get('/profiles/:id', function(req, res, error){
+	console.log("GET: " + JSON.stringify(req.url));
+    console.log("param: _ID:" + req.params.id);
+    //DEFECTIVE: var obj_id = BSON.ObjectID.createFromHexString(req.params.id);
+	//find ressource 'profile :id' db.ObjectID.createFromHexString(req.params.id)
+	console.log("test");
+	profilesCollection.find({_id: mongoDB.helper.toObjectID(req.params.id)}).toArray(function(error, result){
+		//console.log(result);
+		if (error) 
+			next(error);
+		else{
+			//console.log(result);
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify(result));
+
+		};
+	});
+});
+
+/*router.post('/events', function(req, res){
 	//post data to ressource '/events'
 	eventsCollection.update({id: req.body.id}, req.body, {upsert: true}, function(error){
 		if (error) {
@@ -103,22 +112,26 @@ router.get('/events', function(req, res, next){
 
 router.post('/events', function(req, res){
 	//post data to ressource '/events'
+	req.body.date = new Date(req.body.date);
+	console.log(req.body);
 	eventsCollection.update({id: req.body.id}, req.body, {upsert: true}, function(error){
 		if (error) {
 			return console.log('could not update');
 		};
 		console.log('updated. (upsert: true)');
+		res.writeHead(200, 'OK');
+		res.end();
 	});
 });
 
-router.get('/events/:id', function(req, res){
+router.get('/events/:id', function(req, res, error){
 	console.log("GET: " + JSON.stringify(req.url));
     console.log("param: _ID:" + req.params.id);
-    var obj_id = BSON.ObjectID.createFromHexString(req.params.id);
-    eventsCollection.find({_id: obj_id}).toArray(function(error, result) {
-        if (error)
+    //var obj_id = BSON.ObjectID.createFromHexString(req.params.id);
+    eventsCollection.find({_id: {_id: mongoDB.helper.toObjectID(req.params.id)}}).toArray(function(error, result) {
+        if (error){
             next(error);
-        else {
+        }else {
             console.log('Result:');
             console.log(result);
             console.log(result[0]);
@@ -149,7 +162,7 @@ router.get('/events/:id', function(req, res){
             res.end(JSON.stringify(result));
         }
     });
-})
+});
 
 
 module.exports = router;

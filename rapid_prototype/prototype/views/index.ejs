@@ -25,6 +25,16 @@
     	</button>
         <button id="submit2" onclick="send()">Send</button>
     </form>
+    <form name='form_event' id='form_event' action='/events' method='POST'>
+        <input id="title" type="text" value="Titel"Radtour am Rheinufer>
+        <input id="description" type="text" value="Lorem Ipsum. Details. Informationen.">
+        <input id="date" type="date" value="24/01/2016">
+        <input id="start" type="text" value="Köln">
+        <input id="destination" type="text" value="Düsseldorf">
+        <input id="participants" type="text" value="Norbert,Thomas,Tina,Rebecca">
+        <button id="submit_event" >submit</button>
+        <!--<button id="submit_event" onclick="send2()">Send</button>-->
+    </form>
    <script type="text/javascript">
     // Definition der 'action'
     $('#form').submit(function(event) {
@@ -68,6 +78,37 @@
             alert("response" + data);
         });
     }
+    // EVENT Erstellung
+    $('#form_event').submit(function(event) {
+        //Verhindert das Standard-Verhalten von submit
+        event.preventDefault();
+        // Formulardaten werden als JSON Objekt gespeichert
+        var participants_array = $('#participants').val().split(',');
+        var data = {
+            title: $('#title').val(),
+            description: $('#description').val(),
+            date: $('#date').val(),
+            start: $('#start').val(),
+            destination: $('#destination').val(),
+            participants: participants_array
+        };
+        // post auf Ressource '/events'
+        var ajaxPost = $.ajax({
+            type: 'POST',
+            url: '/events',
+            data: JSON.stringify(data),
+            contentType: 'application/json'
+            //dataType: "json"
+        }).done(function(data) {
+            alert('Done.('+ JSON.stringify(data) + ')');
+            // Formular wird zurueckgesetzt
+            $('#form_event')[0].reset();
+            location.href = "/";
+        }).fail(function(e) {
+            alert('Fail. (' + JSON.stringify(e) + ')');
+
+        });
+    });
 	</script>
     
   <iframe name="hiddenFrame" class="hide"></iframe>
