@@ -3,6 +3,7 @@ package eis.bikefriends;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,13 +33,21 @@ public class EventsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_events);
         resultsList = new ArrayList<>();
         final Button bSpeed = (Button) findViewById(R.id.speedB);
+        FloatingActionButton eErstAB = (FloatingActionButton) findViewById(R.id.eventErstB);
 
         mResult = (TextView) findViewById(R.id.tv_result);
         new GetVeranstaltungTask().execute("http://192.168.0.104:3000/events");
 
+        eErstAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent vErstellenIntent = new Intent(EventsActivity.this, eventErstellenActivity.class);
+                vErstellenIntent.this.startActivity(vErstellenIntent);
+            }
+        });
         assert bSpeed != null;
         bSpeed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,18 +130,18 @@ public class EventsActivity extends AppCompatActivity {
                         JSONObject r = results.getJSONObject(i);
 
                         String id = r.getString("id");
-                        String username = r.getString("username");
-                        String averageSpeed = r.getString("averageSpeed");
-                        String averageDistance = r.getString("averageSessionDistance");
-                        //String bikeSports = r.getJSONObject("bikesports").toString();
+                        String eventname = r.getString("eventname");
+                        String ort = r.getString("ort");
+                        String datum = r.getString("datum");
+                        String zeit = r.getJSONObject("zeit").toString();
 
                         HashMap<String, String> user = new HashMap<>();
 
                         user.put("id", id);
-                        user.put("username", username);
-                        user.put("averageSpeed", averageSpeed);
-                        //user.put("bikeSports", bikeSports);
-                        user.put("averageDistance", averageDistance);
+                        user.put("eventname", eventname);
+                        user.put("ort", ort);
+                        user.put("zeit", zeit);
+                        user.put("datum", datum);
 
                         resultsList.add(user);
                     }
