@@ -121,7 +121,7 @@ public class MatchingActivity extends AppCompatActivity {
                 ArrayList<String> list = new ArrayList<String>();
                 list.add("BMX");
                 list.add("Einrad");
-                //Create data to send to server
+                //data zum server senden
                 JSONObject dataToSend = new JSONObject();
                 dataToSend.put("id", input_id.getText().toString().trim() );
                 dataToSend.put("username", input_username.getText().toString().trim());
@@ -129,7 +129,7 @@ public class MatchingActivity extends AppCompatActivity {
                 dataToSend.put("averageSpeed", Integer.parseInt(input_averageSpeed.getText().toString()));
                 dataToSend.put("averageSessionDistance", 20);
 
-                //init and config request, then connect to server
+                //init und config request, connect zum server
                 URL url = new URL(urlPath);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setReadTimeout(10000 /*millisekunden*/);
@@ -168,15 +168,15 @@ public class MatchingActivity extends AppCompatActivity {
                         String averageDistance = r.getString("averageSessionDistance");
                         //String bikeSports = r.getJSONObject("bikesports").toString();
 
-                        HashMap<String, String> user = new HashMap<>();
+                        HashMap<String, String> events = new HashMap<>();
 
-                        user.put("id", id);
-                        user.put("username", username);
-                        user.put("averageSpeed", averageSpeed);
-                        //user.put("bikeSports", bikeSports);
-                        user.put("averageDistance", averageDistance);
+                        events.put("id", id);
+                        events.put("username", username);
+                        events.put("averageSpeed", averageSpeed);
+                        events.put("bikeSports", bikeSports);
+                        events.put("averageDistance", averageDistance);
 
-                        //adding user to result list
+
                         resultsList.add(user);
                     }
                 }catch (final JSONException e) {

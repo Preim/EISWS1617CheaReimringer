@@ -45,7 +45,7 @@ public class EventsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent vErstellenIntent = new Intent(EventsActivity.this, eventErstellenActivity.class);
-                vErstellenIntent.this.startActivity(vErstellenIntent);
+                EventsActivity.this.startActivity(vErstellenIntent);
             }
         });
         assert bSpeed != null;
@@ -87,10 +87,10 @@ public class EventsActivity extends AppCompatActivity {
             super.onPostExecute(result);
 
 
-            //set data response to textView
+
             mResult.setText(result);
 
-            //cancel progress dialog
+
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
@@ -101,7 +101,7 @@ public class EventsActivity extends AppCompatActivity {
             BufferedReader bufferedReader = null;
 
             try {
-                //Initialize and config request, then connect to server
+                //connect zum server
                 URL url = new URL(urlPath);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setReadTimeout(10000 /* milliseconds */);
@@ -110,7 +110,7 @@ public class EventsActivity extends AppCompatActivity {
                 urlConnection.setRequestProperty("Content-Type", "application/json");// set header
                 urlConnection.connect();
 
-                //Read data response from server
+                //Read data response
                 InputStream inputStream = urlConnection.getInputStream();
                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 String line;
