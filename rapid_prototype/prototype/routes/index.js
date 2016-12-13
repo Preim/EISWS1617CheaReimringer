@@ -78,7 +78,7 @@ router.get('/profiles/:id', function(req, res, error){
 	console.log("test");
 	profilesCollection.find({_id: mongoDB.helper.toObjectID(req.params.id)}).toArray(function(error, result){
 		//console.log(result);
-		if (error) 
+		if (error)
 			next(error);
 		else{
 			//console.log(result);
@@ -89,15 +89,32 @@ router.get('/profiles/:id', function(req, res, error){
 	});
 });
 
-/*router.post('/events', function(req, res){
-	//post data to ressource '/events'
-	eventsCollection.update({id: req.body.id}, req.body, {upsert: true}, function(error){
-		if (error) {
-			return console.log('could not update');
-		};
-		console.log('updated. (upsert: true)');
-	});
-});*/
+router.get('/profiles/:id/matches', function(res, req, error){
+	//TODO Determine(?) and get User's Matches
+});
+
+router.post('/profiles/:id/matches', function(res, req, error){
+	//Not used
+});
+
+router.get('/profiles/:id/location', function(res, req, error){
+	//TODO: Get User :id's location
+});
+
+router.post('/profiles/:id/location', function(res, req, error){
+	//TODO: Update User :id's location
+});
+
+router.get('/profiles/:id/averageSpeed', function(res, req, error){
+	//TODO: Get User :id's averageSpeed
+});
+
+router.post('/profiles/:id/averageSpeed', function(res, req, error){
+	//TODO: Update User :id's averageSpeed
+});
+
+
+
 
 router.get('/events', function(req, res, next){
 	eventsCollection.findItems(function(error, result){
@@ -123,6 +140,8 @@ router.post('/events', function(req, res){
 		res.writeHead(200, 'OK');
 		res.end();
 	});
+
+	//TODO: ADvertising event. Send notification to possible participants
 });
 
 router.get('/events/:id', function(req, res, error){
@@ -157,12 +176,13 @@ router.get('/events/:id', function(req, res, error){
 	  				//the whole response has been recieved, so we just print it out here
 	  				response.on('end', function () {
 	  					var weatherdata = JSON.parse(str);
-	  					console.log("High: " + weatherdata.forecast.simpleforecast.forecastday[daysUntilEvent].high["celsius"] + 
-	  						" Low: " + weatherdata.forecast.simpleforecast.forecastday[daysUntilEvent].low["celsius"] + 
+	  					console.log("High: " + weatherdata.forecast.simpleforecast.forecastday[daysUntilEvent].high["celsius"] +
+	  						" Low: " + weatherdata.forecast.simpleforecast.forecastday[daysUntilEvent].low["celsius"] +
 	  						" Conditions: " + weatherdata.forecast.simpleforecast.forecastday[daysUntilEvent].conditions);
 	  					result[0]['high'] = weatherdata.forecast.simpleforecast.forecastday[daysUntilEvent].high["celsius"];
 	  					result[0]['low'] = weatherdata.forecast.simpleforecast.forecastday[daysUntilEvent].high["celsius"];
 	  					result[0]['conditions'] = weatherdata.forecast.simpleforecast.forecastday[daysUntilEvent].conditions;
+	  					console.log(result);
 	  				});
 				}
 
@@ -175,6 +195,20 @@ router.get('/events/:id', function(req, res, error){
         }
     });
 });
+
+router.get('/events/:id/voting/', function(req, res, error){
+	//TODO Get Voting Data
+});
+router.post('/events/:id/voting/', function(req, res, error){
+	//TODO submit vote
+});
+
+
+
+
+
+
+
 
 function daysBetweenDays(date1, date2){
 	var oneday = 86400000; // 1 Tag in ms
