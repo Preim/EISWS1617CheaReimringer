@@ -79,3 +79,6 @@ local.properties
 .idea/scopes/scope_settings.xml
 .idea/vcs.xml
 *.iml
+BikeFriends/.idea/gradle.xml
+BikeFriends/.idea/misc.xml
+BikeFriends/.idea/vcs.xml
