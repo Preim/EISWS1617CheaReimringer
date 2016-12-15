@@ -61,24 +61,25 @@ com_crashlytics_export_strings.xml
 local.properties
 
 # Gradle generated files
-.gradle/
+BikeFriends/.gradle/
 
 # Signing files
 .signing/
 
 # User-specific configurations
-.idea/libraries/
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/.name
-.idea/compiler.xml
-.idea/copyright/profiles_settings.xml
-.idea/encodings.xml
-.idea/misc.xml
-.idea/modules.xml
-.idea/scopes/scope_settings.xml
-.idea/vcs.xml
+BikeFriends/.idea/libraries/
+BikeFriends/.idea/workspace.xml
+BikeFriends/.idea/tasks.xml
+BikeFriends/.idea/.name
+BikeFriends/.idea/compiler.xml
+BikeFriends/.idea/copyright/profiles_settings.xml
+BikeFriends/.idea/encodings.xml
+BikeFriends/.idea/misc.xml
+BikeFriends/.idea/modules.xml
+BikeFriends/.idea/scopes/scope_settings.xml
+BikeFriends/.idea/vcs.xml
 *.iml
 BikeFriends/.idea/gradle.xml
 BikeFriends/.idea/misc.xml
 BikeFriends/.idea/vcs.xml
+BikeFriends/build/
