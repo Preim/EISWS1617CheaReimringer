@@ -136,7 +136,24 @@ router.post('/profiles/:id/location', function(res, req, error) {
 });
 
 router.get('/profiles/:id/averageSpeed', function(res, req, error) {
-    //TODO: Get User :id's averageSpeed
+    //Get User :id's averageSpeed
+    console.log("GET: " + JSON.stringify(req.url));
+    console.log("param: _ID:" + req.params.id);
+    eventsCollection.find({
+        _id: mongoDB.helper.toObjectID(req.params.id)
+    }).toArray(function(error, result) {
+        if (error) {
+            next(error);
+        } else {
+            console.log('Result:');
+            console.log(result[0]);
+            res.writeHead(200, {
+                'Content-Type': 'application/json'
+            });
+            res.end(JSON.stringify(result[0].averageSpeed));
+
+        };
+    });
 });
 
 router.post('/profiles/:id/averageSpeed', function(res, req, error) {
