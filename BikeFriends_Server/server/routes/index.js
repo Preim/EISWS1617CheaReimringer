@@ -252,6 +252,19 @@ router.get('/events/:id', function(req, res, error) {
 
 router.get('/events/:id/voting/', function(req, res, error) {
     //TODO Get Voting Data
+    console.log("GET: " + JSON.stringify(req.url));
+    console.log("param: _ID:" + req.params.id);
+    eventsCollection.find({
+        _id: mongoDB.helper.toObjectID(req.params.id)
+    }).toArray(function(error, result) {
+        if (error) {
+            next(error);
+        } else {
+            //TODO Return voting data
+
+        };
+    });
+
 });
 router.post('/events/:id/voting/', function(req, res, error) {
     //TODO submit vote
