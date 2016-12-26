@@ -4,19 +4,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_first_layout"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_directions_bike_black_24dp"
             android:title="Veranstaltungen" />
         <item
             android:id="@+id/nav_second_layout"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_people_black_24dp"
             android:title="Matches" />
         <item
             android:id="@+id/nav_third_layout"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_settings_black_24dp"
             android:title="Einstellungen" />
     </group>
 
-    <item android:title="Communicate">
+<!--    <item android:title="Communicate">
         <menu>
             <item
                 android:id="@+id/nav_share"
@@ -27,6 +27,6 @@
                 android:icon="@drawable/ic_menu_send"
                 android:title="Send" />
         </menu>
-    </item>
+    </item>-->
 
 </menu>
