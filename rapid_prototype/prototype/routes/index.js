@@ -140,7 +140,20 @@ router.get('/profiles/:id/averageSpeed', function(res, req, error) {
 });
 
 router.post('/profiles/:id/averageSpeed', function(res, req, error) {
-    //TODO: Update User :id's averageSpeed
+
+    console.log("POST: " + JSON.stringify(req.url));
+    console.log("param: _ID:" + req.params.id);
+    profilesCollection.update({
+        _id: mongoDB.helper.toObjectID(req.params.id)
+    }, req.body, function(error){
+        if (error) {
+            return console.log('could not update averageSpeed');
+        };
+        console.log('updated averageSpeed');
+        res.writeHead(200, 'OK');
+        res.end();
+    });
+
 });
 
 router.get('/events', function(req, res, next) {
@@ -174,7 +187,17 @@ router.post('/events', function(req, res) {
         res.end();
     });
 
-    //TODO: ADvertising event. Send notification to possible participants
+    //TODO: ADvertising event. 
+    profilesCollection.find({
+        city: req.body.start
+    }).toArray(function(error, result){
+        if (error) {
+            next(error);
+        } else {
+            //TODO Notify possible participants
+            console.log('Results' + result);
+        };
+    });
 });
 
 router.get('/events/:id', function(req, res, error) {
