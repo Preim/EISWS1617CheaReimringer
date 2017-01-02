@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_event_erstellen"
     android:layout_width="match_parent"
@@ -8,74 +8,148 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="eis.bikefriends.eventErstellenActivity">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Titel"
-        android:ems="10"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/titelET"
-        android:layout_alignParentEnd="true" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Beschreibung"
-        android:ems="10"
-        android:layout_below="@+id/titelET"
-        android:layout_alignParentStart="true"
-        android:id="@+id/beschreibungET"
-        android:layout_alignParentEnd="true" />
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:layout_below="@+id/beschreibungET"
-        android:layout_alignParentStart="true"
-        android:id="@+id/datumET"
-        android:layout_alignParentEnd="true" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="time"
-        android:ems="10"
-        android:layout_below="@+id/datumET"
-        android:layout_alignParentStart="true"
-        android:id="@+id/timeET"
-        android:layout_alignParentEnd="true" />
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/titelET"
+                    android:layout_alignParentEnd="true"
+                    android:hint="Titel" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Ziel"
-        android:ems="10"
-        android:layout_below="@+id/timeET"
-        android:layout_alignParentStart="true"
-        android:id="@+id/zielET"
-        android:layout_alignParentEnd="true" />
+            </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:text="Erstellen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/erstellenB" />
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"
+                    android:ems="10"
+                    android:layout_below="@+id/beschreibungET"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/datumET"
+                    android:layout_alignParentEnd="true"
+                    android:hint="Datum" />
 
-    <Button
-        android:text="Abbrechen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/abbrechenB"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
-</RelativeLayout>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <DatePicker
+                    android:layout_width="match_parent"
+                    android:layout_height="91dp"
+                    android:id="@+id/datePicker" />
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="time"
+                    android:ems="10"
+                    android:layout_below="@+id/datumET"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/timeET"
+                    android:layout_alignParentEnd="true"
+                    android:hint="Uhrzeit" />
+
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/startET"
+                    android:hint="Startort"
+                    android:layout_below="@+id/timeET"
+                    android:layout_alignParentStart="true" />
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/zielET"
+                    android:hint="Zielort"
+                    android:layout_below="@+id/startET"
+                    android:layout_alignParentStart="true" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/beschreibungET"
+                        android:hint="Beschreibung (Details wie Startpunkt...)"
+                        android:layout_below="@+id/titelET"
+                        android:layout_alignParentStart="true" />
+
+                </android.support.design.widget.TextInputLayout>
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="1dp">
+
+                <Button
+                    android:text="Abbrechen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/abbrechenB"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:text="Erstellen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/erstellenB"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

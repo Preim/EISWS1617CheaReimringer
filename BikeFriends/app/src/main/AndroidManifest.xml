@@ -20,18 +20,19 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".GpsActivity" />
         <activity android:name=".eventErstellenActivity" />
         <activity
             android:name=".NavigationActivity"
             android:label="@string/title_activity_navigation"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".CalibrationActivity" />
+        <activity android:name=".MainmenuActivity"></activity>
     </application>
 
 </manifest>

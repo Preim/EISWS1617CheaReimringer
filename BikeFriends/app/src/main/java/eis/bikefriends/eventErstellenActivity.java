@@ -32,7 +32,7 @@ public class eventErstellenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_erstellen);
 
-        final Button eventErst = (Button) findViewById(R.id.eventErstB);
+        final Button eventErst = (Button) findViewById(R.id.erstellenB);
         final Button eventAbbr = (Button) findViewById(R.id.abbrechenB);
 
         assert eventErst != null;

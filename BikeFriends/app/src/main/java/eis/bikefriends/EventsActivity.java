@@ -36,12 +36,12 @@ public class EventsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_events);
         resultsList = new ArrayList<>();
         final Button bSpeed = (Button) findViewById(R.id.speedB);
-        FloatingActionButton eErstAB = (FloatingActionButton) findViewById(R.id.eventErstB);
+        FloatingActionButton createEventAB = (FloatingActionButton) findViewById(R.id.createEventAB);
 
         mResult = (TextView) findViewById(R.id.tv_result);
         new GetVeranstaltungTask().execute("http://192.168.0.104:3000/events");
 
-        eErstAB.setOnClickListener(new View.OnClickListener() {
+        createEventAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent vErstellenIntent = new Intent(EventsActivity.this, eventErstellenActivity.class);

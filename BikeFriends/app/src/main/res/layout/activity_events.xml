@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         app:srcCompat="@color/colorAccent"
-        android:id="@+id/eventErstB"
+        android:id="@+id/createEventAB"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         app:fabSize="mini"
