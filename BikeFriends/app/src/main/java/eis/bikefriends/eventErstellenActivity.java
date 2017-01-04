@@ -1,16 +1,22 @@
 package eis.bikefriends;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.DateFormat;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.app.TimePickerDialog;
+import android.widget.TimePicker;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,34 +29,88 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Calendar;
 
-public class eventErstellenActivity extends AppCompatActivity {
+public class eventErstellenActivity extends AppCompatActivity implements View.OnClickListener{
+    Button eventErst, eventAbbr, timebtn, datebtn;
+    EditText inputTitle, inputBeschreibung, inputZiel;
+    TextView inputDate, inputTime;
+    TimePickerDialog timePickerDialog;
+    DatePickerDialog datePickerDialog;
+    Calendar calendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_erstellen);
 
-        final Button eventErst = (Button) findViewById(R.id.erstellenB);
-        final Button eventAbbr = (Button) findViewById(R.id.abbrechenB);
+        eventErst = (Button) findViewById(R.id.erstellenB);
+        eventErst.setOnClickListener(this);
+        eventAbbr = (Button) findViewById(R.id.abbrechenB);
+        eventAbbr.setOnClickListener(this);
+        timebtn = (Button) findViewById(R.id.timebtn);
+        timebtn.setOnClickListener(this);
+        datebtn = (Button) findViewById(R.id.datebtn);
+        datebtn.setOnClickListener(this);
+
+        inputTitle = (EditText) findViewById(R.id.titelET);
+        inputBeschreibung = (EditText) findViewById(R.id.beschreibungET);
+        //final EditText inputDate = (EditText) findViewById(R.id.datumET);
+        inputDate = (TextView) findViewById((R.id.dateTV));
+        inputTime = (TextView) findViewById(R.id.timeTV);
+        inputZiel = (EditText) findViewById(R.id.zielET);
 
         assert eventErst != null;
-        eventErst.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new PostDataTask().execute("http://192.168.0.104:3000/events");
-            }
-        });
+        //eventErst.setOnClickListener(); // entfernt, siehe in onClick
 
         assert eventAbbr != null;
-        eventAbbr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        //eventAbbr.setOnClickListener(..); //entfernt, siehe in onClick
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.abbrechenB:
                 Intent eventsIntent = new Intent(eventErstellenActivity.this, EventsActivity.class);
                 eventErstellenActivity.this.startActivity(eventsIntent);
+                break;
+            case R.id.erstellenB:
+                new PostDataTask().execute("http://192.168.0.104:3000/events");
+                break;
+            case R.id.datebtn:
+                datePickerDialog = new DatePickerDialog(eventErstellenActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        Calendar dateCalendar = Calendar.getInstance();
+                        dateCalendar.set(Calendar.YEAR, year);
+                        dateCalendar.set(Calendar.MONTH, monthOfYear);
+                        dateCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        String dateString = DateUtils.formatDateTime(eventErstellenActivity.this, dateCalendar.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE);
+                        inputDate.setText("Datum: " + dateString);
+
+                    }
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+                datePickerDialog.show();
+                break;
+            case R.id.timebtn: {
+                timePickerDialog = new TimePickerDialog(eventErstellenActivity.this, new TimePickerDialog.OnTimeSetListener(){
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute){
+                        Calendar timeCalendar = Calendar.getInstance();
+                        timeCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        timeCalendar.set(Calendar.MINUTE, minute);
+                        String timestring = DateUtils.formatDateTime(eventErstellenActivity.this, timeCalendar.getTimeInMillis(), DateUtils.FORMAT_SHOW_TIME);
+                        inputTime.setText("Uhrzeit: " + timestring);
+                    }
+                }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), DateFormat.is24HourFormat(eventErstellenActivity.this));
+                timePickerDialog.show();
+                break;
             }
-        });
+            default:
+                break;
+        }
+
     }
 
     class PostDataTask extends AsyncTask<String, Void, String> {
@@ -93,11 +153,12 @@ public class eventErstellenActivity extends AppCompatActivity {
             BufferedWriter bufferedWriter = null;
             BufferedReader bufferedReader = null;
 
-            final EditText inputTitle = (EditText) findViewById(R.id.titelET);
-            final EditText inputBeschreibung = (EditText) findViewById(R.id.beschreibungET);
-            final EditText inputDatum = (EditText) findViewById(R.id.datumET);
-            final EditText inputTime = (EditText) findViewById(R.id.timeET);
-            final EditText inputZiel = (EditText) findViewById(R.id.zielET);
+/*            inputTitle = (EditText) findViewById(R.id.titelET);
+            inputBeschreibung = (EditText) findViewById(R.id.beschreibungET);
+            //final EditText inputDate = (EditText) findViewById(R.id.datumET);
+            inputDate = (TextView) findViewById((R.id.dateTV));
+            inputTime = (EditText) findViewById(R.id.timeET);
+            inputZiel = (EditText) findViewById(R.id.zielET);*/
             int inputID = 0;
 
             try {
@@ -107,7 +168,7 @@ public class eventErstellenActivity extends AppCompatActivity {
                 dataToSend.put("event", inputTitle.getText().toString().trim());
                 dataToSend.put("ort", inputZiel.getText().toString().trim() );
                 dataToSend.put("zeit", inputTime.getText().toString().trim());
-                dataToSend.put("datum", inputDatum.getText().toString());
+                //dataToSend.put("datum", inputDate.getText().toString());
                 dataToSend.put("beschreibung", inputBeschreibung.getText().toString().trim());
 
 

@@ -38,46 +38,46 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:text="Datum"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="date"
-                    android:ems="10"
-                    android:layout_below="@+id/beschreibungET"
-                    android:layout_alignParentStart="true"
-                    android:id="@+id/datumET"
-                    android:layout_alignParentEnd="true"
-                    android:hint="Datum" />
+                    android:id="@+id/dateTV"
+                    android:layout_weight="1"
+                    android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <DatePicker
-                    android:layout_width="match_parent"
-                    android:layout_height="91dp"
-                    android:id="@+id/datePicker" />
-
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:layout_width="match_parent"
+                <Button
+                    android:text="Datum wählen"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="time"
-                    android:ems="10"
-                    android:layout_below="@+id/datumET"
-                    android:layout_alignParentStart="true"
-                    android:id="@+id/timeET"
-                    android:layout_alignParentEnd="true"
-                    android:hint="Uhrzeit" />
+                    android:id="@+id/datebtn" />
 
+            </LinearLayout>
 
-            </android.support.design.widget.TextInputLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:text="Uhrzeit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/timeTV"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:text="Uhrzeit wählen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/timebtn" />
+            </LinearLayout>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

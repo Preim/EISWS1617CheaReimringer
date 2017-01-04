@@ -26,13 +26,24 @@
             </intent-filter>
         </activity>
         <activity android:name=".GpsActivity" />
-        <activity android:name=".eventErstellenActivity" />
+        <activity
+            android:name=".eventErstellenActivity"
+            android:label="Neue Veranstaltung erstellen"/>
         <activity
             android:name=".NavigationActivity"
             android:label="@string/title_activity_navigation"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".CalibrationActivity" />
-        <activity android:name=".MainmenuActivity"></activity>
+        <activity android:name=".CalibrationActivity"
+            android:label="Kalibration"/>
+        <activity
+            android:name=".MainmenuActivity"
+            android:label="Hauptmenü"></activity>
     </application>
+    <service
+        android:name=".MyFirebaseInstanceIDService">
+        <intent-filter>
+            <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+        </intent-filter>
+    </service>
 
 </manifest>
