@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +30,7 @@ import java.util.HashMap;
 
 public class EventsActivity extends AppCompatActivity {
     private TextView mResult;
+    private ListView resultsLV;
     ArrayList<HashMap<String, String>> resultsList;
 
 
@@ -35,11 +39,12 @@ public class EventsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
         resultsList = new ArrayList<>();
-        final Button bSpeed = (Button) findViewById(R.id.speedB);
+        resultsLV = (ListView) findViewById(R.id.resultsLV);
+        //final Button bSpeed = (Button) findViewById(R.id.speedB);
         FloatingActionButton createEventAB = (FloatingActionButton) findViewById(R.id.createEventAB);
 
-        mResult = (TextView) findViewById(R.id.tv_result);
-        new GetVeranstaltungTask().execute("http://192.168.0.104:3000/events");
+        //mResult = (TextView) findViewById(R.id.tv_result);
+        new GetVeranstaltungTask().execute("http://192.168.0.2:3000/events");
 
         createEventAB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +53,7 @@ public class EventsActivity extends AppCompatActivity {
                 EventsActivity.this.startActivity(vErstellenIntent);
             }
         });
-        assert bSpeed != null;
+/*        assert bSpeed != null;
         bSpeed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +61,7 @@ public class EventsActivity extends AppCompatActivity {
                 EventsActivity.this.startActivity(matchingIntent);
 
             }
-        });
+        });*/
     }
 
     class GetVeranstaltungTask extends AsyncTask<String, Void, String>{
@@ -88,12 +93,20 @@ public class EventsActivity extends AppCompatActivity {
 
 
 
-            mResult.setText(result);
+            //mResult.setText(result);
 
 
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
+
+            ListAdapter adapter = new SimpleAdapter(
+                    EventsActivity.this, resultsList,
+                    R.layout.list_item, new String[]{"title", "start", "date", "date"},
+                    new int[]{R.id.eventTitle, R.id.eventStart, R.id.eventDate, R.id.eventDate});
+
+            resultsLV.setAdapter(adapter);
+
         }
 
         private String getVeranstaltung(String urlPath) throws IOException {
@@ -129,19 +142,22 @@ public class EventsActivity extends AppCompatActivity {
                     for (int i = 0; i < results.length(); i++) {
                         JSONObject r = results.getJSONObject(i);
 
-                        String id = r.getString("id");
-                        String eventname = r.getString("eventname");
-                        String ort = r.getString("ort");
-                        String datum = r.getString("datum");
-                        String zeit = r.getJSONObject("zeit").toString();
+                        String id = r.getString("_id");
+                        String title = r.getString("title");
+                        String start = r.getString("start");
+                        String destination = r.getString("destination");
+                        String date = r.getString("date");
+                        //String zeit = r.getJSONObject("zeit").toString();
+                        //String time = r.getString("time");
 
                         HashMap<String, String> user = new HashMap<>();
 
                         user.put("id", id);
-                        user.put("eventname", eventname);
-                        user.put("ort", ort);
-                        user.put("zeit", zeit);
-                        user.put("datum", datum);
+                        user.put("title", title);
+                        user.put("start", start);
+                        user.put("destination", destination);
+                        user.put("date", date);
+                        //user.put("time", time);
 
                         resultsList.add(user);
                     }

@@ -169,7 +169,11 @@ router.get('/events', function(req, res, next) {
             res.writeHead(200, {
                 'Content-Type': 'application/json'
             });
-            res.end(JSON.stringify(result));
+
+            var obj = {
+                results: result
+            }
+            res.end(JSON.stringify(obj));
         };
     });
 })

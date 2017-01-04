@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">BikeFriends</string>
-    <string name="title_activity_login">Sign in</string>
+    <!-- TODO Loadingactivity implementieren-->
+    <string name="title_activity_login">BikeFriends</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -20,4 +21,5 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="title_activity_test">TestActivity</string>
 </resources>
