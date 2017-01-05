@@ -30,7 +30,11 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class eventErstellenActivity extends AppCompatActivity implements View.OnClickListener{
     Button eventErst, eventAbbr, timebtn, datebtn;
@@ -87,7 +91,12 @@ public class eventErstellenActivity extends AppCompatActivity implements View.On
                         dateCalendar.set(Calendar.MONTH, monthOfYear);
                         dateCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                         String dateString = DateUtils.formatDateTime(eventErstellenActivity.this, dateCalendar.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE);
-                        inputDate.setText("Datum: " + dateString);
+                        Date date = new Date(dateCalendar.getTimeInMillis());
+                        java.text.DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
+                        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                        dateString = dateFormat.format(date);
+
+                        inputDate.setText(dateString);
 
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -102,7 +111,7 @@ public class eventErstellenActivity extends AppCompatActivity implements View.On
                         timeCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         timeCalendar.set(Calendar.MINUTE, minute);
                         String timestring = DateUtils.formatDateTime(eventErstellenActivity.this, timeCalendar.getTimeInMillis(), DateUtils.FORMAT_SHOW_TIME);
-                        inputTime.setText("Uhrzeit: " + timestring);
+                        inputTime.setText(timestring);
                     }
                 }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), DateFormat.is24HourFormat(eventErstellenActivity.this));
                 timePickerDialog.show();
@@ -168,10 +177,11 @@ public class eventErstellenActivity extends AppCompatActivity implements View.On
                 //TODO get user id
                 // dataToSend.put("user_id", inputID);
                 dataToSend.put("title", inputTitle.getText().toString().trim());
+                dataToSend.put("start", inputStart.getText().toString().trim());
                 dataToSend.put("destination", inputDestination.getText().toString().trim() );
-                dataToSend.put("zeit", inputTime.getText().toString().trim());
-                //dataToSend.put("datum", inputDate.getText().toString());
-                dataToSend.put("beschreibung", inputDescription.getText().toString().trim());
+                dataToSend.put("time", inputTime.getText().toString().trim());
+                dataToSend.put("date", inputDate.getText().toString().trim());
+                dataToSend.put("description", inputDescription.getText().toString().trim());
 
 
 

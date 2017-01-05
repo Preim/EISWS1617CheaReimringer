@@ -102,8 +102,8 @@ public class EventsActivity extends AppCompatActivity {
 
             ListAdapter adapter = new SimpleAdapter(
                     EventsActivity.this, resultsList,
-                    R.layout.list_item, new String[]{"title", "start", "date", "date"},
-                    new int[]{R.id.eventTitle, R.id.eventStart, R.id.eventDate, R.id.eventDate});
+                    R.layout.list_item, new String[]{"title", "start", "time", "date"},
+                    new int[]{R.id.eventTitle, R.id.eventStart, R.id.eventTime, R.id.eventDate});
 
             resultsLV.setAdapter(adapter);
 
@@ -148,7 +148,7 @@ public class EventsActivity extends AppCompatActivity {
                         String destination = r.getString("destination");
                         String date = r.getString("date");
                         //String zeit = r.getJSONObject("zeit").toString();
-                        //String time = r.getString("time");
+                        String time = r.getString("time");
 
                         HashMap<String, String> user = new HashMap<>();
 
@@ -157,7 +157,7 @@ public class EventsActivity extends AppCompatActivity {
                         user.put("start", start);
                         user.put("destination", destination);
                         user.put("date", date);
-                        //user.put("time", time);
+                        user.put("time", time);
 
                         resultsList.add(user);
                     }
