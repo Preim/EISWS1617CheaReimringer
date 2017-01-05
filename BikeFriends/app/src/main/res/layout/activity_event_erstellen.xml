@@ -32,7 +32,7 @@
                     android:ems="10"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true"
-                    android:id="@+id/titelET"
+                    android:id="@+id/titleET"
                     android:layout_alignParentEnd="true"
                     android:hint="Titel" />
 
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:ems="10"
-                    android:id="@+id/zielET"
+                    android:id="@+id/destinationET"
                     android:hint="Zielort"
                     android:layout_below="@+id/startET"
                     android:layout_alignParentStart="true" />
@@ -114,9 +114,9 @@
                         android:layout_height="match_parent"
                         android:inputType="textPersonName"
                         android:ems="10"
-                        android:id="@+id/beschreibungET"
+                        android:id="@+id/descriptionET"
                         android:hint="Beschreibung (Details wie Startpunkt...)"
-                        android:layout_below="@+id/titelET"
+                        android:layout_below="@+id/titleET"
                         android:layout_alignParentStart="true" />
 
                 </android.support.design.widget.TextInputLayout>

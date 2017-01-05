@@ -70,4 +70,5 @@
         android:layout_below="@+id/progressBar"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="27dp" />
+
 </RelativeLayout>

@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -33,7 +34,7 @@ import java.util.Calendar;
 
 public class eventErstellenActivity extends AppCompatActivity implements View.OnClickListener{
     Button eventErst, eventAbbr, timebtn, datebtn;
-    EditText inputTitle, inputBeschreibung, inputZiel;
+    EditText inputTitle, inputDescription, inputStart, inputDestination;
     TextView inputDate, inputTime;
     TimePickerDialog timePickerDialog;
     DatePickerDialog datePickerDialog;
@@ -53,12 +54,12 @@ public class eventErstellenActivity extends AppCompatActivity implements View.On
         datebtn = (Button) findViewById(R.id.datebtn);
         datebtn.setOnClickListener(this);
 
-        inputTitle = (EditText) findViewById(R.id.titelET);
-        inputBeschreibung = (EditText) findViewById(R.id.beschreibungET);
-        //final EditText inputDate = (EditText) findViewById(R.id.datumET);
+        inputTitle = (EditText) findViewById(R.id.titleET);
+        inputDescription = (EditText) findViewById(R.id.descriptionET);
         inputDate = (TextView) findViewById((R.id.dateTV));
         inputTime = (TextView) findViewById(R.id.timeTV);
-        inputZiel = (EditText) findViewById(R.id.zielET);
+        inputStart = (EditText) findViewById(R.id.startET);
+        inputDestination = (EditText) findViewById(R.id.destinationET);
 
         assert eventErst != null;
         //eventErst.setOnClickListener(); // entfernt, siehe in onClick
@@ -75,7 +76,7 @@ public class eventErstellenActivity extends AppCompatActivity implements View.On
                 eventErstellenActivity.this.startActivity(eventsIntent);
                 break;
             case R.id.erstellenB:
-                new PostDataTask().execute("http://192.168.0.104:3000/events");
+                new PostDataTask().execute("http://192.168.0.100:3000/events");
                 break;
             case R.id.datebtn:
                 datePickerDialog = new DatePickerDialog(eventErstellenActivity.this, new DatePickerDialog.OnDateSetListener() {
@@ -158,18 +159,19 @@ public class eventErstellenActivity extends AppCompatActivity implements View.On
             //final EditText inputDate = (EditText) findViewById(R.id.datumET);
             inputDate = (TextView) findViewById((R.id.dateTV));
             inputTime = (EditText) findViewById(R.id.timeET);
-            inputZiel = (EditText) findViewById(R.id.zielET);*/
+            inputDestination = (EditText) findViewById(R.id.zielET);*/
             int inputID = 0;
 
             try {
                 //data erstellen
                 JSONObject dataToSend = new JSONObject();
-                dataToSend.put("id", inputID);
-                dataToSend.put("event", inputTitle.getText().toString().trim());
-                dataToSend.put("ort", inputZiel.getText().toString().trim() );
+                //TODO get user id
+                // dataToSend.put("user_id", inputID);
+                dataToSend.put("title", inputTitle.getText().toString().trim());
+                dataToSend.put("destination", inputDestination.getText().toString().trim() );
                 dataToSend.put("zeit", inputTime.getText().toString().trim());
                 //dataToSend.put("datum", inputDate.getText().toString());
-                dataToSend.put("beschreibung", inputBeschreibung.getText().toString().trim());
+                dataToSend.put("beschreibung", inputDescription.getText().toString().trim());
 
 
 
