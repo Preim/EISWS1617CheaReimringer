@@ -80,7 +80,8 @@ public class eventErstellenActivity extends AppCompatActivity implements View.On
                 eventErstellenActivity.this.startActivity(eventsIntent);
                 break;
             case R.id.erstellenB:
-                new PostDataTask().execute("http://192.168.0.100:3000/events");
+                String ipAdresse = GlobalClass.getInstance().getIpAddresse();
+                new PostDataTask().execute(ipAdresse + "/events");
                 break;
             case R.id.datebtn:
                 datePickerDialog = new DatePickerDialog(eventErstellenActivity.this, new DatePickerDialog.OnDateSetListener() {

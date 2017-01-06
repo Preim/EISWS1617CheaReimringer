@@ -44,7 +44,9 @@ public class EventsActivity extends AppCompatActivity {
         FloatingActionButton createEventAB = (FloatingActionButton) findViewById(R.id.createEventAB);
 
         //mResult = (TextView) findViewById(R.id.tv_result);
-        new GetVeranstaltungTask().execute("http://192.168.0.100:3000/events");
+        String ipAdresse = GlobalClass.getInstance().getIpAddresse();
+
+        new GetVeranstaltungTask().execute(ipAdresse + "/events");
 
         createEventAB.setOnClickListener(new View.OnClickListener() {
             @Override
