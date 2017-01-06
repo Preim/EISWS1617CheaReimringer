@@ -7,6 +7,9 @@ var db = mongoDB.db('mongodb://localhost/mydb?auto_reconnect=true', {
 });
 var http = require('http');
 
+var register = require('functions/register');
+var login = require('functions/login');
+
 db.bind('profiles');
 
 var profilesCollection = db.profiles;
@@ -275,9 +278,27 @@ router.post('/events/:id/voting/', function(req, res, error) {
 });
 
 
+router.post('/register', function(req,res){
+    var username = req.body.username;
+    var birthdate = req.body.birthdate;
+    var email = req.body.email;
+    var password = req.body.password;
+    register.useremail(username, birthdate, email, password,function (found) {
+        console.log(found);
+        res.json(found);
+    });
+});
 
 
-
+router.post('/login',function(req,res){
+    var email = req.body.email;
+    var password = req.body.password;
+ 
+    login.login(email,password,function (found) {
+        console.log(found);
+        res.json(found);
+    });
+});
 
 
 

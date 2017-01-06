@@ -28,7 +28,10 @@ coverage
 build/Release
 
 # Dependency directories
-node_modules
+BikeFriends_Server/server/node_modules/*
+!BikeFriends_Server/server/node_modules/functions/
+!BikeFriends_Server/server/node_modules/functions/*
+rapid_prototype/prototype/node_modules
 jspm_packages
 
 # Optional npm cache directory
