@@ -25,7 +25,7 @@
         <activity android:name=".EventsActivity" />
         <!-- TODO Loading Activity implementieren und @string/title_activity_login wieder in "Sign In" ändern -->
         <activity
-            android:name=".Splashscreen"
+            android:name=".SplashscreenActivity"
             android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,7 +47,12 @@
         <activity
             android:name=".MainmenuActivity"
             android:label="Hauptmenü" />
-        <activity android:name=".LoginActivity"></activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="Sign In" />
+        <activity
+            android:name=".RegisterActivity"
+            android:label="Sign Up"></activity>
     </application>
 
 </manifest>
