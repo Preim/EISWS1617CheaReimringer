@@ -55,15 +55,6 @@ public class EventsActivity extends AppCompatActivity {
                 EventsActivity.this.startActivity(vErstellenIntent);
             }
         });
-/*        assert bSpeed != null;
-        bSpeed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent matchingIntent = new Intent(EventsActivity.this, GpsActivity.class);
-                EventsActivity.this.startActivity(matchingIntent);
-
-            }
-        });*/
     }
 
     class GetVeranstaltungTask extends AsyncTask<String, Void, String>{
