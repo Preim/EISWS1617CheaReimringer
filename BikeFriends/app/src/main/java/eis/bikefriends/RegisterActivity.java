@@ -105,8 +105,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         protected void onPreExecute() {
             super.onPreExecute();
 
-/*            progressDialog = new ProgressDialog(RegisterActivity.this);
-            progressDialog.show();*/
+            progressDialog = new ProgressDialog(RegisterActivity.this);
+            progressDialog.show();
         }
 
         @Override
@@ -125,9 +125,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-/*            if (progressDialog != null) {
+            if (progressDialog != null) {
                 progressDialog.dismiss();
-            }*/
+            }
         }
 
         private String postData(String urlPath) throws IOException, JSONException {
