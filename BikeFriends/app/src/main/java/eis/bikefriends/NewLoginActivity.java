@@ -2,6 +2,7 @@ package eis.bikefriends;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,6 +25,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 
 
 public class NewLoginActivity extends AppCompatActivity {
@@ -30,6 +34,7 @@ public class NewLoginActivity extends AppCompatActivity {
     Button login;
     String emailString;
     String passwordString;
+    SharedPreferences pref;
 
 
     @Override
@@ -55,6 +60,9 @@ public class NewLoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 emailString = email.getText().toString();
                 passwordString = password.getText().toString();
+                String ipAdresse = GlobalClass.getInstance().getIpAddresse();
+
+                new PostDataTask().execute(ipAdresse + "/profiles");
             }
         });
     }
@@ -136,6 +144,46 @@ public class NewLoginActivity extends AppCompatActivity {
                 while ((line = bufferedReader.readLine()) != null) {
                     result.append(line).append("\n");
                     Log.d("json", line.toString());
+                }
+
+                try
+                {
+                    JSONObject jsonObj = new JSONObject(result.toString());
+                    if(jsonObj != null) {
+                        try {
+                            String jsonstr = jsonObj.getString("response");
+                            if (jsonObj.getBoolean("res")) {
+                                String token = jsonObj.getString("token");
+                                String grav = jsonObj.getString("grav");
+                                SharedPreferences.Editor edit = pref.edit();
+                                //Speicher Data in SharedPreferences
+                                edit.putString("token", token);
+                                edit.putString("grav", grav);
+                                edit.commit();
+                                Intent loginIntent = new Intent(NewLoginActivity.this, MainmenuActivity.class);
+
+                                startActivity(loginIntent);
+                                finish();
+                            }
+
+                            Toast.makeText(getApplication(), jsonstr, Toast.LENGTH_LONG).show();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }catch (final JSONException e) {
+                    Log.e("parsingError", "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
                 }
             } finally {
                 if (bufferedReader != null) {
