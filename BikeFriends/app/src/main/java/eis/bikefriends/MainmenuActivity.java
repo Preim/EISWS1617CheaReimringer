@@ -38,8 +38,8 @@ public class MainmenuActivity extends AppCompatActivity implements View.OnClickL
 
             case R.id.menuMyProfile:
                 //TODO Implement missing Activities
-/*                Intent profileintent = new Intent(this, ProfileActivity.class);
-                MainmenuActivity.this.startActivity(profileintent);*/
+                Intent profileintent = new Intent(this, MyProfileActivity.class);
+                MainmenuActivity.this.startActivity(profileintent);
                 break;
 
             case R.id.menuEvents:

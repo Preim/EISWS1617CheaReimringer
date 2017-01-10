@@ -283,10 +283,12 @@ router.post('/register', function(req,res){
     var bdate = req.body.bdate;
     var email = req.body.email;
     var password = req.body.password;
+    var gender = req.body.gender;
     console.log(req.body.bdate + "---" + bdate);
     console.log(req.body.username + "---" + username);
     console.log(req.body.password + "---" + password);
     console.log(req.body.email + "---" + email);
+    console.log(req.body.gender + "---" + gender);
     register.register(username, bdate, email, password,function (found) {
         console.log(found);
         res.json(found);

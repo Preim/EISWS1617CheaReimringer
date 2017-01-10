@@ -5,11 +5,8 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,14 +16,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
 
-public class MyProfilActivity extends AppCompatActivity {
+public class MyProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_myprofil);
+        setContentView(R.layout.activity_myprofile);
     }
 
     class GetMyProfilTask extends AsyncTask<String, Void, String> {
@@ -38,7 +34,7 @@ public class MyProfilActivity extends AppCompatActivity {
 
             super.onPreExecute();
 
-            progressDialog = new ProgressDialog(MyProfilActivity.this);
+            progressDialog = new ProgressDialog(MyProfileActivity.this);
             progressDialog.setMessage("Loading Events...");
             progressDialog.show();
         }

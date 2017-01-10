@@ -56,6 +56,45 @@
                 android:hint="Passwort" />
         </android.support.design.widget.TextInputLayout>
 
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:id="@+id/genderRG">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView7"
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                android:gravity="center_vertical"
+                android:paddingLeft="4dp"
+                tools:text="Geschlecht"
+                android:text="Geschlecht" />
+
+            <RadioButton
+                android:text="männlich"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/maleRB"
+                android:layout_weight="1" />
+
+            <RadioButton
+                android:text="weiblich"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/femaleRB"
+                android:layout_weight="1" />
+
+            <EditText
+                android:layout_width="37dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/dummy" />
+        </RadioGroup>
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">

@@ -3,6 +3,7 @@ package eis.bikefriends;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -31,6 +34,8 @@ import java.util.Locale;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
     Button signUpbtn;
     EditText usernameET, emailET, passwordET, bdateET, residenceET;
+    RadioButton maleRB, femaleRB;
+    RadioGroup genderRG;
     String bdateISO;
     Calendar calendar;
     DatePickerDialog.OnDateSetListener date;
@@ -48,6 +53,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         bdateET = (EditText)findViewById(R.id.bdateET);
         bdateET.setOnClickListener(this);
         residenceET = (EditText)findViewById(R.id.residenceET);
+
+        maleRB = (RadioButton)findViewById(R.id.maleRB);
+
+        femaleRB = (RadioButton)findViewById(R.id.femaleRB);
+
+        genderRG = (RadioGroup)findViewById(R.id.genderRG);
 
         signUpbtn = (Button)findViewById(R.id.signUpbtn);
         signUpbtn.setOnClickListener(this);
@@ -144,6 +155,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 dataToSend.put("password", passwordET.getText().toString().trim());
                 dataToSend.put("bdate", bdateISO.toString());
                 dataToSend.put("residence", residenceET.getText().toString().trim());
+                Button temp = (Button)findViewById(genderRG.getCheckedRadioButtonId());
+                dataToSend.put("gender", temp.getText().toString().trim());
 
                 //connect zum server
                 URL url = new URL(urlPath);

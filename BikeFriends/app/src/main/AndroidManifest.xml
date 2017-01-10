@@ -62,7 +62,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MyProfilActivity"></activity>
+        <activity android:name=".MyProfileActivity"></activity>
     </application>
 
 </manifest>
