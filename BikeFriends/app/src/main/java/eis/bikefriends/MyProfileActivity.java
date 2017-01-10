@@ -16,6 +16,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MyProfileActivity extends AppCompatActivity {
 
@@ -23,9 +25,12 @@ public class MyProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myprofile);
+        String ipaddress = GlobalClass.getInstance().getIpAddresse();
+        //TODO Replace hardcoded UUID with real ID/Token
+        new GetMyProfileTask().execute(ipaddress + "/profiles/" + "1234");
     }
 
-    class GetMyProfilTask extends AsyncTask<String, Void, String> {
+    class GetMyProfileTask extends AsyncTask<String, Void, String> {
 
         ProgressDialog progressDialog;
 
@@ -42,7 +47,7 @@ public class MyProfileActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                return getVeranstaltung(params[0]);
+                return getProfile(params[0]);
             }   catch (IOException ex)  {
                 return "Network error!";
             }
@@ -63,7 +68,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
         }
 
-        private String getVeranstaltung(String urlPath) throws IOException {
+        private String getProfile(String urlPath) throws IOException {
             StringBuilder result = new StringBuilder();
             BufferedReader bufferedReader = null;
 
@@ -92,8 +97,11 @@ public class MyProfileActivity extends AppCompatActivity {
                     JSONObject jsonObj = new JSONObject(result.toString());
 
                     String name = jsonObj.getString("name");
-                    String alter = jsonObj.getString("alter");
-                    String geschlecht = jsonObj.getString("geschlecht");
+                    //String alter = jsonObj.getString("alter");
+                    String bdate = jsonObj.getString("bdate");
+                    
+
+                String geschlecht = jsonObj.getString("geschlecht");
                     String wohnort = jsonObj.getString("wohnort");
                     String radtyp = jsonObj.getString("radtyp");
                     String speed = jsonObj.getString("speed");

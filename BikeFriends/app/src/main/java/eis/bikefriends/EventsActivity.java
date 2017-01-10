@@ -143,16 +143,16 @@ public class EventsActivity extends AppCompatActivity {
                         //String zeit = r.getJSONObject("zeit").toString();
                         String time = r.getString("time");
 
-                        HashMap<String, String> user = new HashMap<>();
+                        HashMap<String, String> event = new HashMap<>();
 
-                        user.put("id", id);
-                        user.put("title", title);
-                        user.put("start", start);
-                        user.put("destination", destination);
-                        user.put("date", date);
-                        user.put("time", time);
+                        event.put("id", id);
+                        event.put("title", title);
+                        event.put("start", start);
+                        event.put("destination", destination);
+                        event.put("date", date);
+                        event.put("time", time);
 
-                        resultsList.add(user);
+                        resultsList.add(event);
                     }
                 }catch (final JSONException e) {
                     Log.e("parsingError", "Json parsing error: " + e.getMessage());
