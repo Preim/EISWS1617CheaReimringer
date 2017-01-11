@@ -123,7 +123,7 @@ public class eventErstellenActivity extends AppCompatActivity implements View.On
         }
 
     }
-
+    //TODO: Eventerstellung testen
     class PostDataTask extends AsyncTask<String, Void, String> {
 
         ProgressDialog progressDialog;

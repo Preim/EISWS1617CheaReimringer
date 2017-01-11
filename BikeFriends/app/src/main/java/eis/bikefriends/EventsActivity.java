@@ -92,7 +92,8 @@ public class EventsActivity extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-
+            //TODO Korrekte Darstellung der Listenelemente
+            //TODO Verlinkung zu der Detailseite
             ListAdapter adapter = new SimpleAdapter(
                     EventsActivity.this, resultsList,
                     R.layout.list_item, new String[]{"title", "start", "time", "date"},

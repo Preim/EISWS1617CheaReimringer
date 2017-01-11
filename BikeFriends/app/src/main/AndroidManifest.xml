@@ -62,7 +62,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MyProfileActivity"></activity>
+        <activity
+            android:name=".MyProfileActivity"
+            android:label="Mein Profil"/>
+        <activity
+            android:name=".MatchingActivity"
+            android:label="Matching"/>
     </application>
 
 </manifest>

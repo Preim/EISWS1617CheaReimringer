@@ -13,7 +13,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
+//TODO: Radtypauswahl
+//TODO: Kalibrierung durchführen
+//TODO: Ermittelten Wert persistent speichern
 public class CalibrationActivity extends AppCompatActivity implements LocationListener {
     private static String LOCATION_PERMISSIONS[] = new String[]{
             Manifest.permission.READ_CONTACTS,

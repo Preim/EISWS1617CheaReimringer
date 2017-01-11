@@ -140,7 +140,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 progressDialog.dismiss();
             }
         }
-
+        //TODO: Registrierung testen
         private String postData(String urlPath) throws IOException, JSONException {
 
             StringBuilder result = new StringBuilder();
