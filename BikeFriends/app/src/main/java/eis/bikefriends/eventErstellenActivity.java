@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -70,6 +71,21 @@ public class eventErstellenActivity extends AppCompatActivity implements View.On
 
         assert eventAbbr != null;
         //eventAbbr.setOnClickListener(..); //entfernt, siehe in onClick
+
+        //Toolbar back
+        if(getSupportActionBar()!=null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle("neue Veranstaltung");
+        }
+    }
+
+    //Toolbar back
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home)
+            finish();
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

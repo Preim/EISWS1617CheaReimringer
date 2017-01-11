@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -28,6 +29,21 @@ public class MyProfileActivity extends AppCompatActivity {
         String ipaddress = GlobalClass.getInstance().getIpAddresse();
         //TODO Replace hardcoded UUID with real ID/Token
         new GetMyProfileTask().execute(ipaddress + "/profiles/" + "1234");
+
+        //Toolbar
+        if(getSupportActionBar()!=null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle("Mein Profil");
+        }
+    }
+
+    //Toolbar back
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home)
+            finish();
+        return super.onOptionsItemSelected(item);
     }
 
     class GetMyProfileTask extends AsyncTask<String, Void, String> {

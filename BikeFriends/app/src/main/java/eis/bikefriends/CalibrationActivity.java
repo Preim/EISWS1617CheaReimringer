@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.Manifest;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +51,22 @@ public class CalibrationActivity extends AppCompatActivity implements LocationLi
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         this.onLocationChanged(null);
 
+
+        //Toolbar
+        if(getSupportActionBar()!=null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
     }
+
+    //Toolbar back
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home)
+            finish();
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
