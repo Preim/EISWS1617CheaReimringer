@@ -163,13 +163,7 @@ public class eventErstellenActivity extends AppCompatActivity implements View.On
             StringBuilder result = new StringBuilder();
             BufferedWriter bufferedWriter = null;
             BufferedReader bufferedReader = null;
-
-/*            inputTitle = (EditText) findViewById(R.id.titelET);
-            inputBeschreibung = (EditText) findViewById(R.id.beschreibungET);
-            //final EditText inputDate = (EditText) findViewById(R.id.datumET);
-            inputDate = (TextView) findViewById((R.id.dateTV));
-            inputTime = (EditText) findViewById(R.id.timeET);
-            inputDestination = (EditText) findViewById(R.id.zielET);*/
+            
             int inputID = 0;
 
             try {

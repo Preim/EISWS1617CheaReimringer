@@ -185,7 +185,7 @@ router.post('/events', function(req, res) {
     //post data to ressource '/events'
     req.body.date = new Date(req.body.date);
     console.log(req.body);
-    eventsCollection.update({
+/*    eventsCollection.update({
         id: req.body.id
     }, req.body, {
         upsert: true
@@ -196,7 +196,15 @@ router.post('/events', function(req, res) {
         console.log('updated. (upsert: true)');
         res.writeHead(200, 'OK');
         res.end();
-    });
+    });*/
+
+    eventsCollection.insert(req.body, function(error){
+        if (error) {
+            next(error);
+        };
+        res.writeHead(200, 'OK');
+        res.end();
+    })
 
     //TODO: ADvertising event. Send notification to possible participants
 });
