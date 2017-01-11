@@ -53,7 +53,7 @@ public class MainmenuActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.menuCalibration:
                 //TODO Implement CalibrationActivity. Using GpsActivity temporary
-                Intent calibrationintent = new Intent(this, GpsActivity.class);
+                Intent calibrationintent = new Intent(this, CalibrationActivity.class);
                 MainmenuActivity.this.startActivity(calibrationintent);
                 break;
             case R.id.menuSettings:

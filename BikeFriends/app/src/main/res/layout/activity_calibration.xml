@@ -23,52 +23,52 @@
         android:text="ToggleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/toggleButton"
+        android:id="@+id/toggleCalbtn"
         android:textOff="Aufzeichnung starten"
         android:textOn="Aufzeichnung beenden"
         android:checked="true"
         android:layout_marginBottom="25dp"
-        android:layout_above="@+id/button4"
+        android:layout_above="@+id/savebtn"
         android:layout_centerHorizontal="true" />
 
     <Button
         android:text="Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button4"
+        android:id="@+id/savebtn"
         tools:text="Speichern"
         android:layout_marginBottom="25dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:text="TextView"
+        android:text="0 m/s"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView5"
-        tools:text="Durchschnittsgeschwindigkeit"
-        android:layout_marginTop="36dp"
-        android:layout_below="@+id/textView4"
+        android:id="@+id/currectSpeedTV"
+        android:textAppearance="@android:style/TextAppearance.Material.Display2"
+        android:contentDescription="Momentane Geschwindigkeit"
+        android:layout_below="@+id/traveledDistanceTV"
         android:layout_centerHorizontal="true" />
 
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView4"
-        tools:text="Momentane Geschwindigkeit"
-        android:layout_marginTop="45dp"
-        android:layout_below="@+id/textView3"
-        android:layout_alignStart="@+id/textView5" />
+        android:id="@+id/averageSpeedTV"
+        tools:text="Durchschnittsgeschwindigkeit"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        android:layout_above="@+id/toggleCalbtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="29dp" />
 
     <TextView
-        android:text="TextView"
+        android:text="0 km"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView3"
-        tools:text="Gefahrene Strecke"
+        android:id="@+id/traveledDistanceTV"
+        android:textAppearance="@android:style/TextAppearance.Material.Display2"
         android:layout_below="@+id/progressBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp" />
+        android:layout_alignStart="@+id/savebtn" />
 
 </RelativeLayout>
