@@ -42,10 +42,10 @@ public class MyProfileActivity extends AppCompatActivity {
         String ipaddress = GlobalClass.getInstance().getIpAddresse();
         //TODO Replace hardcoded UUID with real ID/Token
         pref = getSharedPreferences("AppPref", MODE_PRIVATE);
-        token = pref.getString("token", "");
-        grav = pref.getString("grav", "");
+        token = pref.getString("token", "DEADBEEF");
+        //TODO Generate Dummy Profile #DEADBEEF?
 
-        new GetMyProfileTask().execute(ipaddress + "/profiles/" + "1234");
+        new GetMyProfileTask().execute(ipaddress + "/profiles/" + token );
 
         //Toolbar
         if(getSupportActionBar()!=null){
