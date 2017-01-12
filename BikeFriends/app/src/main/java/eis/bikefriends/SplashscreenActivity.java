@@ -12,6 +12,9 @@ public class SplashscreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
+        if(getSupportActionBar()!=null){
+            getSupportActionBar().hide();
+        }
 
         new Handler().postDelayed(new Runnable(){
             @Override
