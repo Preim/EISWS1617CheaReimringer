@@ -3,7 +3,9 @@ package eis.bikefriends;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -20,6 +22,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,7 +32,20 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +71,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask mAuthTask = null;
+    //private UserLoginTask mAuthTask = null;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -64,26 +80,30 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
     Button mEmailSignInButton;
     Button signUpbtn;
+    String ipAdresse, response;
+    SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ipAdresse = GlobalClass.getInstance().getIpAddresse();
+        pref = getSharedPreferences("AppPref", MODE_PRIVATE);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+/*        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+                    //attemptLogin();
                     return true;
                 }
                 return false;
             }
-        });
+        });*/
 
         mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(this);
@@ -100,7 +120,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.email_sign_in_button:
-                attemptLogin();
+                //attemptLogin();
+                new LoginTask().execute(ipAdresse + "/login");
                 break;
             case R.id.signUpbtn:
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -159,7 +180,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin() {
+   /* private void attemptLogin() {
         if (mAuthTask != null) {
             return;
         }
@@ -204,7 +225,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
         }
-    }
+    }*/
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
@@ -312,7 +333,113 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    class LoginTask extends AsyncTask<String, Void, String> {
+
+        ProgressDialog progressDialog;
+        JSONObject json_result;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog = new ProgressDialog(LoginActivity.this);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                return postData(params[0]);
+            } catch (IOException ex) {
+                return "Network error!";
+            } catch (JSONException ex) {
+                return "Data Invalid!";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+
+            }
+            Toast.makeText(LoginActivity.this, response, Toast.LENGTH_SHORT).show();
+            if(json_result!=null){
+                try{
+                    if(json_result.getBoolean("res")){
+                        String token = json_result.getString("token");
+                        SharedPreferences.Editor edit = pref.edit();
+                        edit.putString("token", token);
+                        edit.commit();
+                        Intent loginIntent = new Intent(LoginActivity.this, MainmenuActivity.class);
+                        LoginActivity.this.startActivity(loginIntent);
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+
+        private String postData(String urlPath) throws IOException, JSONException {
+
+            StringBuilder result = new StringBuilder();
+            BufferedWriter bufferedWriter = null;
+            BufferedReader bufferedReader = null;
+
+            try {
+                //data erstellen
+                JSONObject dataToSend = new JSONObject();
+                dataToSend.put("email", mEmailView.getText().toString().trim());
+                dataToSend.put("password", mPasswordView.getText().toString().trim());
+
+                //connect zum server
+                URL url = new URL(urlPath);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setReadTimeout(10000 /* milliseconds */);
+                urlConnection.setConnectTimeout(10000 /* milliseconds */);
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setDoOutput(true); //enable output (body data)
+                urlConnection.setRequestProperty("Content-Type", "application/json");// set header
+                urlConnection.connect();
+
+                //Write data
+                OutputStream outputStream = urlConnection.getOutputStream();
+                bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
+                bufferedWriter.write(dataToSend.toString());
+                bufferedWriter.flush();
+
+                //Read data
+                InputStream inputStream = urlConnection.getInputStream();
+                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    result.append(line).append("\n");
+                    Log.d("json", line.toString());
+                }
+            } finally {
+                if (bufferedReader != null) {
+                    bufferedReader.close();
+                }
+                if (bufferedWriter != null) {
+                    bufferedWriter.close();
+                }
+
+            }
+            json_result = new JSONObject(result.toString());
+            Log.d("json", json_result.getString("response"));
+            response = json_result.getString("response");
+            Log.d("json", result.toString());
+            /*if(response.equals("Sucessfully registered")){
+                finish();
+            }*/
+            return result.toString();
+        }
+    /*public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String mEmail;
         private final String mPassword;
@@ -365,7 +492,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected void onCancelled() {
             mAuthTask = null;
             showProgress(false);
-        }
+        }*/
     }
 }
 

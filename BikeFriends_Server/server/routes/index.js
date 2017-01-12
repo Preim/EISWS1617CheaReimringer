@@ -99,14 +99,14 @@ router.post('/profiles', function(req, res) {
 
 
 
-router.get('/profiles/:id', function(req, res, error) {
+router.get('/profiles/:token', function(req, res, error) {
     console.log("GET: " + JSON.stringify(req.url));
     console.log("param: _ID:" + req.params.id);
     //DEFECTIVE: var obj_id = BSON.ObjectID.createFromHexString(req.params.id);
     //find ressource 'profile :id' db.ObjectID.createFromHexString(req.params.id)
     console.log("test");
     profilesCollection.find({
-        _id: mongoDB.helper.toObjectID(req.params.id)
+        token: req.params.token
     }).toArray(function(error, result) {
         //console.log(result);
         if (error)
