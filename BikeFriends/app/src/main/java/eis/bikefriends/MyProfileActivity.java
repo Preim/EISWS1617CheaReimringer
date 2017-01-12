@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -21,6 +22,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MyProfileActivity extends AppCompatActivity {
+
+    TextView nameTv = (TextView) findViewById(R.id.nameTV);
+    TextView age_genderTv = (TextView) findViewById(R.id.alter_geschlechtTv);
+    TextView residenceTv = (TextView) findViewById(R.id.residenceET);
+    TextView radtypTv = (TextView) findViewById(R.id.radtypTv);
+    TextView speedTv = (TextView) findViewById(R.id.speedTv);
+    TextView distanceTv = (TextView) findViewById(R.id.distanceTv);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,16 +119,14 @@ public class MyProfileActivity extends AppCompatActivity {
 
 
                     JSONObject jsonObj = new JSONObject(result.toString());
-
-                    String name = jsonObj.getString("name");
-                    //String alter = jsonObj.getString("alter");
-                    String bdate = jsonObj.getString("bdate");
+                    String age_gender = jsonObj.getString("bdate") + " " + jsonObj.getString("geschlecht");
                     
-
-                String geschlecht = jsonObj.getString("geschlecht");
-                    String wohnort = jsonObj.getString("wohnort");
-                    String radtyp = jsonObj.getString("radtyp");
-                    String speed = jsonObj.getString("speed");
+                    nameTv.setText(jsonObj.getString("geschlecht"));
+                    age_genderTv.setText(age_gender);
+                    residenceTv.setText(jsonObj.getString("wohnort"));
+                    radtypTv.setText(jsonObj.getString("radtyp"));
+                    speedTv.setText(jsonObj.getString("speed"));
+                    distanceTv.setText(jsonObj.getString("distance"));
 
 
                 }catch (final JSONException e) {
