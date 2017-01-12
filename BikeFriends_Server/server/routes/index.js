@@ -297,7 +297,7 @@ router.post('/register', function(req,res){
     console.log(req.body.password + "---" + password);
     console.log(req.body.email + "---" + email);
     console.log(req.body.gender + "---" + gender);
-    register.register(username, bdate, email, password,function (found) {
+    register.register(username, bdate, email, password, gender, function (found) {
         console.log(found);
         res.json(found);
     });

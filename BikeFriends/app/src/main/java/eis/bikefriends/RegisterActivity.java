@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     String bdateISO;
     Calendar calendar;
     DatePickerDialog.OnDateSetListener date;
-    String ipAdresse;
+    String ipAdresse, response;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,6 +156,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             if (progressDialog != null) {
                 progressDialog.dismiss();
+
+            }
+            Toast.makeText(RegisterActivity.this, response, Toast.LENGTH_SHORT).show();
+            if(response.equals("Sucessfully registered")){
+                finish();
             }
         }
         //TODO: Registrierung testen
@@ -208,8 +214,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 }
 
             }
-
+            JSONObject json = new JSONObject(result.toString());
+            Log.d("json", json.getString("response"));
+            response = json.getString("response");
             Log.d("json", result.toString());
+            /*if(response.equals("Sucessfully registered")){
+                finish();
+            }*/
             return result.toString();
         }
     }
