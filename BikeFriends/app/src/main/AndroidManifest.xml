@@ -23,7 +23,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".EventsActivity" />
-        <!-- TODO Loading Activity implementieren und @string/title_activity_login wieder in "Sign In" ändern -->
         <activity
             android:name=".SplashscreenActivity"
             android:label="@string/title_activity_login">

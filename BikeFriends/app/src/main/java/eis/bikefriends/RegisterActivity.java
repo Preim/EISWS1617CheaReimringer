@@ -163,7 +163,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 finish();
             }
         }
-        //TODO: Registrierung testen
+
         private String postData(String urlPath) throws IOException, JSONException {
 
             StringBuilder result = new StringBuilder();

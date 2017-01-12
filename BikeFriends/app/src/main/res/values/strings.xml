@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">BikeFriends</string>
-    <!-- TODO Loadingactivity implementieren-->
     <string name="title_activity_login">BikeFriends</string>
 
     <!-- Strings related to login -->

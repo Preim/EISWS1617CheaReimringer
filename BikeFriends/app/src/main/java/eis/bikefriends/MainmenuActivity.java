@@ -37,7 +37,6 @@ public class MainmenuActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
 
             case R.id.menuMyProfile:
-                //TODO Implement missing Activities
                 Intent profileintent = new Intent(this, MyProfileActivity.class);
                 MainmenuActivity.this.startActivity(profileintent);
                 break;
@@ -48,12 +47,10 @@ public class MainmenuActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case R.id.menuMatching:
-                //TODO Implement MatchingActivity
                 Intent matchingintent = new Intent(this, MatchingActivity.class);
                 MainmenuActivity.this.startActivity(matchingintent);
                 break;
             case R.id.menuCalibration:
-                //TODO Implement CalibrationActivity. Using GpsActivity temporary
                 Intent calibrationintent = new Intent(this, CalibrationActivity.class);
                 MainmenuActivity.this.startActivity(calibrationintent);
                 break;
