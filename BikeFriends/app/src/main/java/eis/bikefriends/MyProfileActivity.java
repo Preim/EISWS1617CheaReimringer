@@ -1,6 +1,7 @@
 package eis.bikefriends;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +24,8 @@ import java.util.Date;
 
 public class MyProfileActivity extends AppCompatActivity {
     TextView nameTv, age_genderTv, residenceTv, radtypTv, speedTv, distanceTv;
+    SharedPreferences pref;
+    String token,grav;
 
 
     @Override
@@ -38,6 +41,9 @@ public class MyProfileActivity extends AppCompatActivity {
 
         String ipaddress = GlobalClass.getInstance().getIpAddresse();
         //TODO Replace hardcoded UUID with real ID/Token
+        pref = getSharedPreferences("AppPref", MODE_PRIVATE);
+        token = pref.getString("token", "");
+        grav = pref.getString("grav", "");
 
         new GetMyProfileTask().execute(ipaddress + "/profiles/" + "1234");
 

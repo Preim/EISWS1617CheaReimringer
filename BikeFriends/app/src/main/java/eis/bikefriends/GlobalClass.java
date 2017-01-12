@@ -13,7 +13,7 @@ public class GlobalClass {
 
     private GlobalClass(){
     }
-    private static String ipAddresse = "http://192.168.0.2:3000";
+    private static String ipAddresse = "http://192.168.0.101:3000";
 
 
     public String getIpAddresse(){
