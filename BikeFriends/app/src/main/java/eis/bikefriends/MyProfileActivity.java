@@ -23,12 +23,12 @@ import java.util.Date;
 
 public class MyProfileActivity extends AppCompatActivity {
 
-    TextView nameTv = (TextView) findViewById(R.id.nameTV);
-    TextView age_genderTv = (TextView) findViewById(R.id.alter_geschlechtTv);
-    TextView residenceTv = (TextView) findViewById(R.id.residenceET);
-    TextView radtypTv = (TextView) findViewById(R.id.radtypTv);
-    TextView speedTv = (TextView) findViewById(R.id.speedTv);
-    TextView distanceTv = (TextView) findViewById(R.id.distanceTv);
+    TextView nameTv = (TextView) this.findViewById(R.id.nameTV);
+    TextView age_genderTv = (TextView) this.findViewById(R.id.alter_geschlechtTv);
+    TextView residenceTv = (TextView) this.findViewById(R.id.residenceET);
+    TextView radtypTv = (TextView) this.findViewById(R.id.radtypTv);
+    TextView speedTv = (TextView) this.findViewById(R.id.speedTv);
+    TextView distanceTv = (TextView) this.findViewById(R.id.distanceTv);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,13 +120,17 @@ public class MyProfileActivity extends AppCompatActivity {
 
                     JSONObject jsonObj = new JSONObject(result.toString());
                     String age_gender = jsonObj.getString("bdate") + " " + jsonObj.getString("geschlecht");
-                    
-                    nameTv.setText(jsonObj.getString("geschlecht"));
+                    String name = jsonObj.getString("name");
+                    String residence = jsonObj.getString("wohnort");
+                    String radtyp = jsonObj.getString("radtyp");
+                    String speed = jsonObj.getString("speed");
+                    String distance = jsonObj.getString("distance");
+                    nameTv.setText(name);
                     age_genderTv.setText(age_gender);
-                    residenceTv.setText(jsonObj.getString("wohnort"));
-                    radtypTv.setText(jsonObj.getString("radtyp"));
-                    speedTv.setText(jsonObj.getString("speed"));
-                    distanceTv.setText(jsonObj.getString("distance"));
+                    residenceTv.setText(residence);
+                    radtypTv.setText(radtyp);
+                    speedTv.setText(speed);
+                    distanceTv.setText(distance);
 
 
                 }catch (final JSONException e) {
