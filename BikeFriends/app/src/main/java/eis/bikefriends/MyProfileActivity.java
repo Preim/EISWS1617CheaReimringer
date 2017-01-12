@@ -22,20 +22,23 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MyProfileActivity extends AppCompatActivity {
+    TextView nameTv, age_genderTv, residenceTv, radtypTv, speedTv, distanceTv;
 
-    TextView nameTv = (TextView) this.findViewById(R.id.nameTV);
-    TextView age_genderTv = (TextView) this.findViewById(R.id.alter_geschlechtTv);
-    TextView residenceTv = (TextView) this.findViewById(R.id.residenceET);
-    TextView radtypTv = (TextView) this.findViewById(R.id.radtypTv);
-    TextView speedTv = (TextView) this.findViewById(R.id.speedTv);
-    TextView distanceTv = (TextView) this.findViewById(R.id.distanceTv);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myprofile);
+        TextView nameTv = (TextView) findViewById(R.id.nameTV);
+        TextView age_genderTv = (TextView) findViewById(R.id.alter_geschlechtTv);
+        TextView residenceTv = (TextView) findViewById(R.id.residenceET);
+        TextView radtypTv = (TextView) findViewById(R.id.radtypTv);
+        TextView speedTv = (TextView) findViewById(R.id.speedTv);
+        TextView distanceTv = (TextView) findViewById(R.id.distanceTv);
+
         String ipaddress = GlobalClass.getInstance().getIpAddresse();
         //TODO Replace hardcoded UUID with real ID/Token
+
         new GetMyProfileTask().execute(ipaddress + "/profiles/" + "1234");
 
         //Toolbar
@@ -119,7 +122,9 @@ public class MyProfileActivity extends AppCompatActivity {
 
 
                     JSONObject jsonObj = new JSONObject(result.toString());
-                    String age_gender = jsonObj.getString("bdate") + " " + jsonObj.getString("geschlecht");
+                    String age = jsonObj.getString("bdate");
+                    String gender = jsonObj.getString("geschlecht");
+                    String age_gender =  age + ", " + gender;
                     String name = jsonObj.getString("name");
                     String residence = jsonObj.getString("wohnort");
                     String radtyp = jsonObj.getString("radtyp");
