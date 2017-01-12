@@ -61,14 +61,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/alter_geschlechtTv"
             android:layout_alignParentStart="true"
-            android:id="@+id/residencetv"
+            android:id="@+id/residenceTV"
             android:textAppearance="@android:style/TextAppearance.Material.Subhead" />
 
         <TextView
             android:text="Radtyp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/residencetv"
+            android:layout_below="@+id/residenceTV"
             android:layout_alignParentStart="true"
             android:layout_marginTop="48dp"
             android:id="@+id/radtypTv"

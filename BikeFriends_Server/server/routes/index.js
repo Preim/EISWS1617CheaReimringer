@@ -101,7 +101,7 @@ router.post('/profiles', function(req, res) {
 
 router.get('/profiles/:token', function(req, res, error) {
     console.log("GET: " + JSON.stringify(req.url));
-    console.log("param: _ID:" + req.params.id);
+    console.log("param: token:" + req.params.token);
     //DEFECTIVE: var obj_id = BSON.ObjectID.createFromHexString(req.params.id);
     //find ressource 'profile :id' db.ObjectID.createFromHexString(req.params.id)
     console.log("test");
@@ -112,11 +112,11 @@ router.get('/profiles/:token', function(req, res, error) {
         if (error)
             next(error);
         else {
-            //console.log(result);
+            console.log(result[0]);
             res.writeHead(200, {
                 'Content-Type': 'application/json'
             });
-            res.end(JSON.stringify(result));
+            res.end(JSON.stringify(result[0]));
 
         };
     });
@@ -292,12 +292,14 @@ router.post('/register', function(req,res){
     var email = req.body.email;
     var password = req.body.password;
     var gender = req.body.gender;
+    var residence = req.body.residence;
     console.log(req.body.bdate + "---" + bdate);
     console.log(req.body.username + "---" + username);
     console.log(req.body.password + "---" + password);
     console.log(req.body.email + "---" + email);
     console.log(req.body.gender + "---" + gender);
-    register.register(username, bdate, email, password, gender, function (found) {
+    console.log(req.body.residence);
+    register.register(username, bdate, email, password, gender, residence, function (found) {
         console.log(found);
         res.json(found);
     });

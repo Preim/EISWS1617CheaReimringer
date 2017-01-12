@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MyProfileActivity extends AppCompatActivity {
-    TextView nameTv, age_genderTv, residenceTv, radtypTv, speedTv, distanceTv;
+    TextView nameTv, age_genderTv, radtypTv, speedTv, distanceTv, residenceTV;
     SharedPreferences pref;
     String token,grav;
 
@@ -32,12 +32,12 @@ public class MyProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myprofile);
-        TextView nameTv = (TextView) findViewById(R.id.nameTV);
-        TextView age_genderTv = (TextView) findViewById(R.id.alter_geschlechtTv);
-        TextView residenceTv = (TextView) findViewById(R.id.residenceET);
-        TextView radtypTv = (TextView) findViewById(R.id.radtypTv);
-        TextView speedTv = (TextView) findViewById(R.id.speedTv);
-        TextView distanceTv = (TextView) findViewById(R.id.distanceTv);
+        nameTv = (TextView) findViewById(R.id.nameTV);
+        age_genderTv = (TextView) findViewById(R.id.alter_geschlechtTv);
+        radtypTv = (TextView) findViewById(R.id.radtypTv);
+        speedTv = (TextView) findViewById(R.id.speedTv);
+        distanceTv = (TextView) findViewById(R.id.distanceTv);
+        residenceTV = (TextView) findViewById(R.id.residenceTV);
 
         String ipaddress = GlobalClass.getInstance().getIpAddresse();
         //TODO Replace hardcoded UUID with real ID/Token
@@ -66,6 +66,8 @@ public class MyProfileActivity extends AppCompatActivity {
     class GetMyProfileTask extends AsyncTask<String, Void, String> {
 
         ProgressDialog progressDialog;
+        JSONObject json_result;
+
 
         @Override
         protected void onPreExecute() {
@@ -83,6 +85,8 @@ public class MyProfileActivity extends AppCompatActivity {
                 return getProfile(params[0]);
             }   catch (IOException ex)  {
                 return "Network error!";
+            } catch (JSONException e) {
+                return "Data Invalid!";
             }
         }
 
@@ -95,13 +99,49 @@ public class MyProfileActivity extends AppCompatActivity {
             //mResult.setText(result);
 
 
+
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
+            if(json_result!=null){
+                try {
 
+
+                    JSONObject jsonObj = new JSONObject(result.toString());
+                    //TODO Convert to age
+                    String age = jsonObj.getString("birthdate");
+                    String gender = jsonObj.getString("gender");
+                    String age_gender =  age + ", " + gender;
+                    String username = jsonObj.getString("username");
+                    String residence = jsonObj.getString("residence");
+                    //String radtyp = jsonObj.getString("radtyp");
+                    //String speed = jsonObj.getString("speed");
+                    //String distance = jsonObj.getString("distance");
+                    nameTv.setText(username);
+                    age_genderTv.setText(age_gender);
+                    residenceTV.setText(residence);
+                    //TODO Reale Daten anlegen
+                    radtypTv.setText("Rennrad");
+                    speedTv.setText("30 km/h");
+                    distanceTv.setText("200km");
+
+
+                }catch (final JSONException e) {
+                    Log.e("parsingError", "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+                }
+            }
         }
 
-        private String getProfile(String urlPath) throws IOException {
+        private String getProfile(String urlPath) throws IOException, JSONException {
             StringBuilder result = new StringBuilder();
             BufferedReader bufferedReader = null;
 
@@ -123,44 +163,12 @@ public class MyProfileActivity extends AppCompatActivity {
                     result.append(line).append("\n");
                     Log.d("json", line);
                 }
-
-                try {
-
-
-                    JSONObject jsonObj = new JSONObject(result.toString());
-                    String age = jsonObj.getString("bdate");
-                    String gender = jsonObj.getString("geschlecht");
-                    String age_gender =  age + ", " + gender;
-                    String name = jsonObj.getString("name");
-                    String residence = jsonObj.getString("wohnort");
-                    String radtyp = jsonObj.getString("radtyp");
-                    String speed = jsonObj.getString("speed");
-                    String distance = jsonObj.getString("distance");
-                    nameTv.setText(name);
-                    age_genderTv.setText(age_gender);
-                    residenceTv.setText(residence);
-                    radtypTv.setText(radtyp);
-                    speedTv.setText(speed);
-                    distanceTv.setText(distance);
-
-
-                }catch (final JSONException e) {
-                    Log.e("parsingError", "Json parsing error: " + e.getMessage());
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(),
-                                    "Json parsing error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    });
-                }
             } finally {
                 if (bufferedReader != null) {
                     bufferedReader.close();
                 }
             }
+            json_result = new JSONObject(result.toString());
             Log.d("json", result.toString());
 
 
