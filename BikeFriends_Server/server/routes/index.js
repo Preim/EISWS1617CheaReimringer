@@ -27,6 +27,7 @@ router.get('/', function(req, res, next) {
 
 
 /* GET home page. */
+//TODO: Do Sanitization!
 router.get('/profiles', function(req, res, next) {
     profilesCollection.findItems(function(error, result) {
         if (error)
@@ -112,7 +113,9 @@ router.get('/profiles/:id', function(req, res, error) {
         if (error)
             next(error);
         else {
-            console.log(result[0]);
+            delete result[0].hashed_password;
+            delete result[0].salt;
+            delete result[0].token;
             res.writeHead(200, {
                 'Content-Type': 'application/json'
             });
