@@ -99,14 +99,14 @@ router.post('/profiles', function(req, res) {
 
 
 
-router.get('/profiles/:token', function(req, res, error) {
+router.get('/profiles/:id', function(req, res, error) {
     console.log("GET: " + JSON.stringify(req.url));
-    console.log("param: token:" + req.params.token);
+    console.log("param: token:" + req.params.id);
     //DEFECTIVE: var obj_id = BSON.ObjectID.createFromHexString(req.params.id);
     //find ressource 'profile :id' db.ObjectID.createFromHexString(req.params.id)
     console.log("test");
     profilesCollection.find({
-        token: req.params.token
+        _id: mongoDB.helper.toObjectID(req.params.id)
     }).toArray(function(error, result) {
         //console.log(result);
         if (error)
@@ -213,17 +213,18 @@ router.get('/events/:id', function(req, res, error) {
     console.log("GET: " + JSON.stringify(req.url));
     console.log("param: _ID:" + req.params.id);
     //var obj_id = BSON.ObjectID.createFromHexString(req.params.id);
-    eventsCollection.findOne({_id:mongoDB.helper.toObjectID(req.params.id)},function(error, event){
+    eventsCollection.findOne({_id:mongoDB.helper.toObjectID(req.params.id)},function(error, result){
         if (error){
             next (error)
         }else{
+            var event = result;
             console.log('Result:');
             console.log(event);
             console.log(event.start);
             console.log(event.date);
             var daysUntilEvent = daysfromTodayToEventDate(event.date) + 1;
             console.log(daysUntilEvent + " days until event");
-            if (daysUntilEvent <= 10) {
+            if (daysUntilEvent <= 10 && daysUntilEvent > 0) {
                 var options = {
                     host: 'api.wunderground.com',
                     path: '/api/318295f477098775/forecast10day/lang:DE/q/Germany/' + 'Cologne.json'
@@ -240,6 +241,7 @@ router.get('/events/:id', function(req, res, error) {
                     //the whole response has been recieved, so we just print it out here
                     response.on('end', function() {
                         var weatherdata = JSON.parse(str);
+                        //console.log(weatherdata.forecast.simpleforecast.forecastday[2]);
                         console.log("High: " + weatherdata.forecast.simpleforecast.forecastday[daysUntilEvent].high["celsius"] +
                             " Low: " + weatherdata.forecast.simpleforecast.forecastday[daysUntilEvent].low["celsius"] +
                             " Conditions: " + weatherdata.forecast.simpleforecast.forecastday[daysUntilEvent].conditions);
