@@ -13,12 +13,13 @@
     "express": "~4.13.4",
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0",
-    "mongoskin": "*",
+    "mongoskin": "2.1.0",
     "http": "*",
     "csprng" : "~0.1.1",
     "connect": "~2.14.4",
     "nodemailer":"~0.6.3",
     "crypto":"~0.0.3",
-    "gravatar":"~1.0.6"
+    "gravatar":"~1.0.6",
+    "mongodb":"2.2.16"
   }
 }

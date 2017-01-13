@@ -49,6 +49,7 @@ public class EventsActivity extends AppCompatActivity {
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+    String e_id;
 
 
 
@@ -145,12 +146,13 @@ public class EventsActivity extends AppCompatActivity {
 
             resultsLV.setAdapter(adapter);
 
-            //TODO Korrekte EventID weiterleiten
             resultsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent itemInten = new Intent(EventsActivity.this, EventDetailsActivity.class);
-                    itemInten.putExtra(eventID, String.valueOf(id));
+                    //resultsLV id = (resultsLV) resultsLV.getSelectedItem();
+                    //String value = id.getTheValue();
+                    itemInten.putExtra(eventID, e_id);
                     startActivity(itemInten);
                 }
             });
@@ -200,7 +202,7 @@ public class EventsActivity extends AppCompatActivity {
                     for (int i = 0; i < results.length(); i++) {
                         JSONObject r = results.getJSONObject(i);
 
-                        String id = r.getString("_id");
+                        e_id = r.getString("_id");
                         String title = r.getString("title");
                         String start = r.getString("start");
                         String destination = r.getString("destination");
@@ -210,7 +212,7 @@ public class EventsActivity extends AppCompatActivity {
 
                         HashMap<String, String> event = new HashMap<>();
 
-                        event.put("id", id);
+                        event.put("id", e_id);
                         event.put("title", title);
                         event.put("start", start);
                         event.put("destination", destination);

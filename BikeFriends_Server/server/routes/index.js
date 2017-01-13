@@ -215,6 +215,8 @@ router.get('/events/:id', function(req, res, error) {
     //var obj_id = BSON.ObjectID.createFromHexString(req.params.id);
     eventsCollection.find({
         _id: mongoDB.helper.toObjectID(req.params.id)
+        //_id: mongoDB.ObjectID(req.params.id)
+        //_id: obj_id
     }).toArray(function(error, result) {
         if (error) {
             next(error);
@@ -256,10 +258,14 @@ router.get('/events/:id', function(req, res, error) {
                 http.request(options, callback).end();
 
             }
+            resultsArray = result;
+            var jsonObject = {
+                results: resultsArray
+            };
             res.writeHead(200, {
                 'Content-Type': 'application/json'
             });
-            res.end(JSON.stringify(result));
+            res.end(JSON.stringify(jsonObject));
 
         }
     });
