@@ -149,12 +149,12 @@ public class EventsActivity extends AppCompatActivity {
 
             resultsLV.setAdapter(adapter);
 
+            //OnItemClick getEventID
+            //Intent mit EventID auf EventDetailsActivity
             resultsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent itemInten = new Intent(EventsActivity.this, EventDetailsActivity.class);
-                    //resultsLV id = (resultsLV) resultsLV.getSelectedItem();
-                    //String value = id.getTheValue();
                     HashMap<String, String> selectEvent = new HashMap<>();
                     selectEvent = resultsList.get((int) id);
 
@@ -163,16 +163,6 @@ public class EventsActivity extends AppCompatActivity {
                     startActivity(itemInten);
                 }
             });
-
-            /*resultsLV.setOnClickListener(onListClick);
-            AdapterView.OnItemClickListener onListClick = new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent itemIntent = new Intent(EventsActivity.this, EventDetailsActivity.class);
-                    itemIntent.putExtra(eventID, String.valueOf(id));
-                    startActivity(itemIntent);
-                }
-            };*/
 
         }
 
