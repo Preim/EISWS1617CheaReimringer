@@ -140,13 +140,14 @@ public class EventDetailsActivity extends AppCompatActivity {
 
 
                     JSONObject jsonObj = new JSONObject(result.toString());
+                    JSONObject event = jsonObj.getJSONObject("results");
 
-                    title = jsonObj.getString("title");
-                    start = jsonObj.getString("start");
-                    destination = jsonObj.getString("destination");
-                    date = jsonObj.getString("date");
-                    time = jsonObj.getString("time");
-                    description = jsonObj.getString("description");
+                    title = event.getString("title");
+                    start = event.getString("start");
+                    destination = event.getString("destination");
+                    date = event.getString("date");
+                    time = event.getString("time");
+                    description = event.getString("description");
 
 
                 } catch (final JSONException e) {

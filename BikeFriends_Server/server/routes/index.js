@@ -213,19 +213,15 @@ router.get('/events/:id', function(req, res, error) {
     console.log("GET: " + JSON.stringify(req.url));
     console.log("param: _ID:" + req.params.id);
     //var obj_id = BSON.ObjectID.createFromHexString(req.params.id);
-    eventsCollection.find({
-        _id: mongoDB.helper.toObjectID(req.params.id)
-        //_id: mongoDB.ObjectID(req.params.id)
-        //_id: obj_id
-    }).toArray(function(error, result) {
-        if (error) {
-            next(error);
-        } else {
+    eventsCollection.findOne({_id:mongoDB.helper.toObjectID(req.params.id)},function(error, event){
+        if (error){
+            next (error)
+        }else{
             console.log('Result:');
-            console.log(result[0]);
-            console.log(result[0].start);
-            console.log(result[0].date);
-            var daysUntilEvent = daysfromTodayToEventDate(result[0].date) + 1;
+            console.log(event);
+            console.log(event.start);
+            console.log(event.date);
+            var daysUntilEvent = daysfromTodayToEventDate(event.date) + 1;
             console.log(daysUntilEvent + " days until event");
             if (daysUntilEvent <= 10) {
                 var options = {
@@ -247,18 +243,16 @@ router.get('/events/:id', function(req, res, error) {
                         console.log("High: " + weatherdata.forecast.simpleforecast.forecastday[daysUntilEvent].high["celsius"] +
                             " Low: " + weatherdata.forecast.simpleforecast.forecastday[daysUntilEvent].low["celsius"] +
                             " Conditions: " + weatherdata.forecast.simpleforecast.forecastday[daysUntilEvent].conditions);
-                        result[0]['high'] = weatherdata.forecast.simpleforecast.forecastday[daysUntilEvent].high["celsius"];
-                        result[0]['low'] = weatherdata.forecast.simpleforecast.forecastday[daysUntilEvent].high["celsius"];
-                        result[0]['conditions'] = weatherdata.forecast.simpleforecast.forecastday[daysUntilEvent].conditions;
-                        console.log(result);
-                        //TODO: Wetterdaten in result integrieren
-                    });
+                        event['high'] = weatherdata.forecast.simpleforecast.forecastday[daysUntilEvent].high["celsius"];
+                        event['low'] = weatherdata.forecast.simpleforecast.forecastday[daysUntilEvent].high["celsius"];
+                        event['conditions'] = weatherdata.forecast.simpleforecast.forecastday[daysUntilEvent].conditions;
+                        console.log(event);
+                        //TODO: Wetterdaten in event integrieren
+                    }); 
                 }
-
                 http.request(options, callback).end();
-
             }
-            resultsArray = result;
+            resultsArray = event;
             var jsonObject = {
                 results: resultsArray
             };
@@ -266,9 +260,8 @@ router.get('/events/:id', function(req, res, error) {
                 'Content-Type': 'application/json'
             });
             res.end(JSON.stringify(jsonObject));
-
         }
-    });
+    })
 });
 
 router.get('/events/:id/voting/', function(req, res, error) {
