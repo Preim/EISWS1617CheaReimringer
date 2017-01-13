@@ -103,13 +103,17 @@ public class EventDetailsActivity extends AppCompatActivity {
             event_descriptTv = (TextView) findViewById(R.id.event_descriptTv);
             eventIDTv = (TextView) findViewById(R.id.eventIDTv);
 
-            eventIDTv.setText(eventID);
+            eventIDTv.setText("Event ID: " + eventID);
             event_titleTv.setText(title);
-            event_startTv.setText(start);
-            event_destTv.setText(destination);
-            event_timeTv.setText(time);
-            event_dateTv.setText(date);
-            event_descriptTv.setText(description);
+            event_startTv.setText("Start: " + start);
+            event_destTv.setText("Ziel: " + destination);
+            event_timeTv.setText("Zeit: " + time);
+            event_dateTv.setText("Datum: " + date);
+            event_descriptTv.setText("Beschreibung: " + description);
+
+            if(getSupportActionBar()!=null){
+                getSupportActionBar().setTitle(title);
+            }
 
         }
 
