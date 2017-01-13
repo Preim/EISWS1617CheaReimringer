@@ -25,7 +25,7 @@ import java.util.Date;
 public class MyProfileActivity extends AppCompatActivity {
     TextView nameTv, age_genderTv, radtypTv, speedTv, distanceTv, residenceTV;
     SharedPreferences pref;
-    String token,grav;
+    String token,userid;
 
 
     @Override
@@ -43,9 +43,10 @@ public class MyProfileActivity extends AppCompatActivity {
         //TODO Replace hardcoded UUID with real ID/Token
         pref = getSharedPreferences("AppPref", MODE_PRIVATE);
         token = pref.getString("token", "DEADBEEF");
+        userid = pref.getString("userID", "DEADBEEF");
         //TODO Generate Dummy Profile #DEADBEEF?
 
-        new GetMyProfileTask().execute(ipaddress + "/profiles/" + token );
+        new GetMyProfileTask().execute(ipaddress + "/profiles/" + userid );
 
         //Toolbar
         if(getSupportActionBar()!=null){
