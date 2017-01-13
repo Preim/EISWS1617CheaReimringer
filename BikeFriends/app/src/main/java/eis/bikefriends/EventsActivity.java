@@ -43,6 +43,9 @@ public class EventsActivity extends AppCompatActivity {
     private TextView mResult;
     private ListView resultsLV;
     ArrayList<HashMap<String, String>> resultsList;
+
+
+
     public final static String eventID = "eis.bikefriends.EventsActivity_eventID";
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -152,7 +155,11 @@ public class EventsActivity extends AppCompatActivity {
                     Intent itemInten = new Intent(EventsActivity.this, EventDetailsActivity.class);
                     //resultsLV id = (resultsLV) resultsLV.getSelectedItem();
                     //String value = id.getTheValue();
-                    itemInten.putExtra(eventID, e_id);
+                    HashMap<String, String> selectEvent = new HashMap<>();
+                    selectEvent = resultsList.get((int) id);
+
+                    String eID = (String)selectEvent.get("id");
+                    itemInten.putExtra(eventID, eID);
                     startActivity(itemInten);
                 }
             });
