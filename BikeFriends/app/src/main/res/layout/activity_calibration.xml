@@ -52,15 +52,12 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:text="TextView"
+        android:text="verbleibene m"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/averageSpeedTV"
-        tools:text="Durchschnittsgeschwindigkeit"
-        android:textAppearance="@android:style/TextAppearance.Material.Medium"
-        android:layout_above="@+id/toggleCalbtn"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="29dp" />
+        android:id="@+id/remainingDistanceTV" />
 
     <TextView
         android:text="0 km"
@@ -70,5 +67,23 @@
         android:textAppearance="@android:style/TextAppearance.Material.Display2"
         android:layout_below="@+id/progressBar"
         android:layout_alignStart="@+id/savebtn" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/averageSpeedTV"
+        tools:text="Durchschnittsgeschwindigkeit"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        android:layout_above="@+id/toggleCalbtn"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="samples"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dataSamplesTV"
+        android:layout_below="@+id/remainingDistanceTV"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

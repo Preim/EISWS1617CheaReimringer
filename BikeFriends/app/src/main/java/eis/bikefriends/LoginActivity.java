@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     Button mEmailSignInButton;
-    Button signUpbtn;
+    Button signUpbtn, testCalbtn;
     String ipAdresse, response;
     SharedPreferences pref;
 
@@ -110,6 +110,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         signUpbtn = (Button) findViewById(R.id.signUpbtn);
         signUpbtn.setOnClickListener(this);
+
+        testCalbtn = (Button) findViewById(R.id.testCalbtn);
+        testCalbtn.setOnClickListener(this);
+
+
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);

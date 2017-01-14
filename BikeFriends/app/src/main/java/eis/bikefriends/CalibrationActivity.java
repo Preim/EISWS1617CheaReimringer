@@ -26,6 +26,7 @@ public class CalibrationActivity extends AppCompatActivity implements LocationLi
     Button savebtn;
     ToggleButton toggleCalbtn;
     TextView traveledDistanceTV, currentSpeedTV, averageSpeedTV;
+    Boolean toggleCalbtnState;
 
 
     private final static int REQUEST_LOCATIONS_CODE = 100;
@@ -40,6 +41,7 @@ public class CalibrationActivity extends AppCompatActivity implements LocationLi
         averageSpeedTV = (TextView)findViewById(R.id.averageSpeedTV);
 
         toggleCalbtn = (ToggleButton)findViewById(R.id.toggleCalbtn);
+        toggleCalbtnState = toggleCalbtn.isChecked();
 
         savebtn = (Button)findViewById(R.id.savebtn);
 
