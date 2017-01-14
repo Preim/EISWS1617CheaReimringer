@@ -135,6 +135,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             super.onPreExecute();
 
             progressDialog = new ProgressDialog(RegisterActivity.this);
+            progressDialog.setMessage("Registriere neuen Benutzer...");
             progressDialog.show();
         }
 

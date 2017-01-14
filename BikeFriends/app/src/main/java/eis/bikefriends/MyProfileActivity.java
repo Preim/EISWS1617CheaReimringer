@@ -19,13 +19,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class MyProfileActivity extends AppCompatActivity {
     TextView nameTv, age_genderTv, radtypTv, speedTv, distanceTv, residenceTV;
     SharedPreferences pref;
-    String token,userid;
+    String token,userid, bdate_iso, bdate;
 
 
     @Override
@@ -76,7 +79,7 @@ public class MyProfileActivity extends AppCompatActivity {
             super.onPreExecute();
 
             progressDialog = new ProgressDialog(MyProfileActivity.this);
-            progressDialog.setMessage("Loading Events...");
+            progressDialog.setMessage("Lade Profil...");
             progressDialog.show();
         }
 
@@ -110,7 +113,14 @@ public class MyProfileActivity extends AppCompatActivity {
 
                     JSONObject jsonObj = new JSONObject(result.toString());
                     //TODO Convert to age
-                    String age = jsonObj.getString("birthdate");
+                    String birthdate = jsonObj.getString("birthdate");
+                    //TODO So werden ISO 8601 Daten geparst
+                    SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.getDefault());
+                    Date bdate = dateformat.parse(birthdate);
+
+
+                    int age = getAge(bdate);
+
                     String gender = jsonObj.getString("gender");
                     String age_gender =  age + ", " + gender;
                     String username = jsonObj.getString("username");
@@ -138,6 +148,8 @@ public class MyProfileActivity extends AppCompatActivity {
                                     .show();
                         }
                     });
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -175,5 +187,14 @@ public class MyProfileActivity extends AppCompatActivity {
 
             return result.toString();
         }
+    }
+    public int getAge(Date bdate){
+        Calendar calendar = Calendar.getInstance();
+        int currentYear = calendar.get(Calendar.YEAR);
+        calendar.setTime(bdate);
+        int age = currentYear - calendar.get(Calendar.YEAR);
+        if(age < 0)
+            throw new IllegalArgumentException("Ungültiges Alter: age < 0");
+        return age;
     }
 }

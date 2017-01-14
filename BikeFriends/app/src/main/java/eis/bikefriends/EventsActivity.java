@@ -36,8 +36,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class EventsActivity extends AppCompatActivity {
     private TextView mResult;
@@ -144,8 +149,8 @@ public class EventsActivity extends AppCompatActivity {
             //TODO Korrekte Darstellung der Listenelemente
             ListAdapter adapter = new SimpleAdapter(
                     EventsActivity.this, resultsList,
-                    R.layout.list_item, new String[]{"title", "start", "time", "date"},
-                    new int[]{R.id.eventTitle, R.id.eventStart, R.id.eventTime, R.id.eventDate});
+                    R.layout.list_item, new String[]{"title", "start", "destination", "time", "date"},
+                    new int[]{R.id.eventTitle, R.id.eventStart, R.id.eventDestination, R.id.eventTime, R.id.eventDate});
 
             resultsLV.setAdapter(adapter);
 
@@ -205,7 +210,7 @@ public class EventsActivity extends AppCompatActivity {
                         String destination = r.getString("destination");
                         String date = r.getString("date");
                         //String zeit = r.getJSONObject("zeit").toString();
-                        //String time = r.getString("time");
+                        String time = r.getString("time");
 
                         HashMap<String, String> event = new HashMap<>();
 
@@ -213,8 +218,18 @@ public class EventsActivity extends AppCompatActivity {
                         event.put("title", title);
                         event.put("start", start);
                         event.put("destination", destination);
-                        event.put("date", date);
-                       // event.put("time", time);
+                        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.getDefault());
+                        Date jdate = dateformat.parse(date);
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(jdate);
+                        int year = calendar.get(Calendar.YEAR);
+                        //TODO: Hinweis: Monate beginnen im Calendar mit 0
+                        int month = calendar.get(Calendar.MONTH)+1;
+                        int day = calendar.get(Calendar.DAY_OF_MONTH);
+                        String datestring = "" + day + " " + month + System.lineSeparator() + year;
+
+                        event.put("date", datestring);
+                        event.put("time", time);
 
                         resultsList.add(event);
                     }
@@ -229,6 +244,8 @@ public class EventsActivity extends AppCompatActivity {
                                     .show();
                         }
                     });
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
             } finally {
                 if (bufferedReader != null) {
@@ -239,6 +256,7 @@ public class EventsActivity extends AppCompatActivity {
 
 
             return result.toString();
+
         }
     }
 }

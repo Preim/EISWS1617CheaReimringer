@@ -3,6 +3,7 @@ package eis.bikefriends;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +45,7 @@ public class eventErstellenActivity extends AppCompatActivity implements View.On
     TimePickerDialog timePickerDialog;
     DatePickerDialog datePickerDialog;
     Calendar calendar = Calendar.getInstance();
+    SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,8 @@ public class eventErstellenActivity extends AppCompatActivity implements View.On
         inputTime = (TextView) findViewById(R.id.timeTV);
         inputStart = (EditText) findViewById(R.id.startET);
         inputDestination = (EditText) findViewById(R.id.destinationET);
+
+        pref = getSharedPreferences("AppPref", MODE_PRIVATE);
 
         assert eventErst != null;
         //eventErst.setOnClickListener(); // entfernt, siehe in onClick
@@ -92,8 +96,7 @@ public class eventErstellenActivity extends AppCompatActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.abbrechenB:
-                Intent eventsIntent = new Intent(eventErstellenActivity.this, EventsActivity.class);
-                eventErstellenActivity.this.startActivity(eventsIntent);
+                finish();
                 break;
             case R.id.erstellenB:
                 String ipAdresse = GlobalClass.getInstance().getIpAddresse();
@@ -149,7 +152,7 @@ public class eventErstellenActivity extends AppCompatActivity implements View.On
             super.onPreExecute();
 
             progressDialog = new ProgressDialog(eventErstellenActivity.this);
-            progressDialog.setMessage("Inserting data...");
+            progressDialog.setMessage("Erstelle Veranstaltung...");
             progressDialog.show();
         }
 
@@ -193,6 +196,8 @@ public class eventErstellenActivity extends AppCompatActivity implements View.On
                 dataToSend.put("time", inputTime.getText().toString().trim());
                 dataToSend.put("date", inputDate.getText().toString().trim());
                 dataToSend.put("description", inputDescription.getText().toString().trim());
+                String organiser = pref.getString("userID", null);
+                dataToSend.put("organiser", organiser);
 
 
 

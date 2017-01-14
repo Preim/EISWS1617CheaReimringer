@@ -116,6 +116,7 @@ router.get('/profiles/:id', function(req, res, error) {
             delete result[0].hashed_password;
             delete result[0].salt;
             delete result[0].token;
+            console.log(result[0]);
             res.writeHead(200, {
                 'Content-Type': 'application/json'
             });

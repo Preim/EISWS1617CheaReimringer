@@ -2,6 +2,7 @@ package eis.bikefriends;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -29,8 +31,11 @@ import java.util.HashMap;
 public class EventDetailsActivity extends AppCompatActivity {
 
     String eventID;
-    private TextView eventIDTv, event_titleTv, event_startTv, event_destTv, event_timeTv, event_dateTv, event_descriptTv;
-    String title, start, destination, time, date, description;
+    private TextView eventIDTv, event_titleTv, event_startTv, event_destTv, event_timeTv, event_dateTv, event_descriptTv, event_organiser;
+    String title, start, destination, time, date, description, organiser;
+    SharedPreferences pref;
+    Button teilnehmenbtn;
+
 
 
     @Override
@@ -44,6 +49,18 @@ public class EventDetailsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setTitle("Veranstaltungens Name");
         }
+        event_titleTv = (TextView) findViewById(R.id.event_titleTv);
+        event_startTv = (TextView) findViewById(R.id.event_startTv);
+        event_destTv = (TextView) findViewById(R.id.event_destTv);
+        event_timeTv = (TextView) findViewById(R.id.event_timeTv);
+        event_dateTv = (TextView) findViewById(R.id.event_dateTv);
+        event_descriptTv = (TextView) findViewById(R.id.event_descriptTv);
+        eventIDTv = (TextView) findViewById(R.id.eventIDTv);
+        event_organiser = (TextView) findViewById(R.id.event_organizerTV);
+
+        pref = getSharedPreferences("AppPref", MODE_PRIVATE);
+
+        teilnehmenbtn = (Button) findViewById(R.id.teilnehmenbtn);
 
         String ipAdresse = GlobalClass.getInstance().getIpAddresse();
         eventID = getIntent().getStringExtra(EventsActivity.eventID);
@@ -70,7 +87,7 @@ public class EventDetailsActivity extends AppCompatActivity {
             super.onPreExecute();
 
             progressDialog = new ProgressDialog(EventDetailsActivity.this);
-            progressDialog.setMessage("Loading Events...");
+            progressDialog.setMessage("Lade Veranstaltung...");
             progressDialog.show();
         }
 
@@ -88,20 +105,13 @@ public class EventDetailsActivity extends AppCompatActivity {
             super.onPostExecute(result);
 
 
-            //mResult.setText(result);
+            //Prüfen, ob der Betrachter der Veranstalter ist. Wenn wahr, teilnehmenbtn verbergen
 
 
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
 
-            event_titleTv = (TextView) findViewById(R.id.event_titleTv);
-            event_startTv = (TextView) findViewById(R.id.event_startTv);
-            event_destTv = (TextView) findViewById(R.id.event_destTv);
-            event_timeTv = (TextView) findViewById(R.id.event_timeTv);
-            event_dateTv = (TextView) findViewById(R.id.event_dateTv);
-            event_descriptTv = (TextView) findViewById(R.id.event_descriptTv);
-            eventIDTv = (TextView) findViewById(R.id.eventIDTv);
 
             eventIDTv.setText("Event ID: " + eventID);
             event_titleTv.setText(title);
@@ -110,6 +120,12 @@ public class EventDetailsActivity extends AppCompatActivity {
             event_timeTv.setText("Zeit: " + time);
             event_dateTv.setText("Datum: " + date);
             event_descriptTv.setText("Beschreibung: " + description);
+            event_organiser.setText("Veranstalter" + organiser);
+
+            String pref_organiser = pref.getString("userID", null);
+            if (organiser.equals(pref_organiser)){
+                teilnehmenbtn.setVisibility(View.GONE);
+            }
 
             if(getSupportActionBar()!=null){
                 getSupportActionBar().setTitle(title);
@@ -152,6 +168,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                     date = event.getString("date");
                     time = event.getString("time");
                     description = event.getString("description");
+                    organiser = event.getString("organiser");
 
 
                 } catch (final JSONException e) {
