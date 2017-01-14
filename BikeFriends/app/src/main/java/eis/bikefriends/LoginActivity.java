@@ -127,6 +127,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 LoginActivity.this.startActivity(intent);
                 break;
+            case R.id.testCalbtn:
+                Intent calintent = new Intent(LoginActivity.this, CalibrationActivity.class);
+                LoginActivity.this.startActivity(calintent);
+
+
         }
 
     }
