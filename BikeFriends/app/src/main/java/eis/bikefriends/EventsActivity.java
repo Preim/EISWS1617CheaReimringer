@@ -146,7 +146,6 @@ public class EventsActivity extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            //TODO Korrekte Darstellung der Listenelemente
             ListAdapter adapter = new SimpleAdapter(
                     EventsActivity.this, resultsList,
                     R.layout.list_item, new String[]{"title", "start", "destination", "time", "date"},
@@ -223,7 +222,7 @@ public class EventsActivity extends AppCompatActivity {
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(jdate);
                         int year = calendar.get(Calendar.YEAR);
-                        //TODO: Hinweis: Monate beginnen im Calendar mit 0
+                        //Hinweis: Monate beginnen im Calendar mit 0
                         int month = calendar.get(Calendar.MONTH)+1;
                         int day = calendar.get(Calendar.DAY_OF_MONTH);
                         String datestring = "" + day + " " + month + System.lineSeparator() + year;

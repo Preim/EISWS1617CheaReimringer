@@ -142,7 +142,6 @@ public class eventErstellenActivity extends AppCompatActivity implements View.On
         }
 
     }
-    //TODO: Eventerstellung testen
     class PostDataTask extends AsyncTask<String, Void, String> {
 
         ProgressDialog progressDialog;
@@ -188,8 +187,6 @@ public class eventErstellenActivity extends AppCompatActivity implements View.On
             try {
                 //data erstellen
                 JSONObject dataToSend = new JSONObject();
-                //TODO get user id
-                // dataToSend.put("user_id", inputID);
                 dataToSend.put("title", inputTitle.getText().toString().trim());
                 dataToSend.put("start", inputStart.getText().toString().trim());
                 dataToSend.put("destination", inputDestination.getText().toString().trim() );

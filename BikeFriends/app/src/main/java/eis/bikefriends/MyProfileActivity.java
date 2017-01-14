@@ -43,7 +43,6 @@ public class MyProfileActivity extends AppCompatActivity {
         residenceTV = (TextView) findViewById(R.id.residenceTV);
 
         String ipaddress = GlobalClass.getInstance().getIpAddresse();
-        //TODO Replace hardcoded UUID with real ID/Token
         pref = getSharedPreferences("AppPref", MODE_PRIVATE);
         token = pref.getString("token", "DEADBEEF");
         userid = pref.getString("userID", "DEADBEEF");
@@ -112,9 +111,8 @@ public class MyProfileActivity extends AppCompatActivity {
 
 
                     JSONObject jsonObj = new JSONObject(result.toString());
-                    //TODO Convert to age
                     String birthdate = jsonObj.getString("birthdate");
-                    //TODO So werden ISO 8601 Daten geparst
+                    //So werden ISO 8601 Daten geparst
                     SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.getDefault());
                     Date bdate = dateformat.parse(birthdate);
 

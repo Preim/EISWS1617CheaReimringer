@@ -75,7 +75,6 @@ public class EventDetailsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //TODO Datenabrufen
 
     class GetVeranstaltungTask extends AsyncTask<String, Void, String> {
 
