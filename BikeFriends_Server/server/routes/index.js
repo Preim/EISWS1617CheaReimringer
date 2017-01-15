@@ -38,7 +38,7 @@ router.get('/profiles', function(req, res, next) {
                 'Content-Type': 'application/json'
             });
             res.end(JSON.stringify(result));
-        };
+        }
     });
 });
 
@@ -130,7 +130,7 @@ router.get('/profiles/:id', function(req, res, error) {
             });
             res.end(JSON.stringify(result[0]));
 
-        };
+        }
     });
 });
 
@@ -167,7 +167,7 @@ router.get('/profiles/:id/averageSpeed', function(res, req, error) {
             });
             res.end(JSON.stringify(result[0].averageSpeed));
 
-        };
+        }
     });
 });
 
@@ -180,18 +180,18 @@ router.get('/events', function(req, res, next) {
         if (error)
             next(error);
         else {
-            console.log(result)
+            console.log(result);
             res.writeHead(200, {
                 'Content-Type': 'application/json'
             });
 
             var obj = {
                 results: result
-            }
+            };
             res.end(JSON.stringify(obj));
-        };
+        }
     });
-})
+});
 
 router.post('/events', function(req, res) {
     //post data to ressource '/events'
@@ -213,10 +213,10 @@ router.post('/events', function(req, res) {
     eventsCollection.insert(req.body, function(error){
         if (error) {
             next(error);
-        };
+        }
         res.writeHead(200, 'OK');
         res.end();
-    })
+    });
 
     //TODO: ADvertising event. Send notification to possible participants
 });
@@ -227,7 +227,7 @@ router.get('/events/:id', function(req, res, error) {
     //var obj_id = BSON.ObjectID.createFromHexString(req.params.id);
     eventsCollection.findOne({_id:mongoDB.helper.toObjectID(req.params.id)},function(error, result){
         if (error){
-            next (error)
+            next (error);
         }else{
             var event = result;
             console.log('Result:');
@@ -263,7 +263,7 @@ router.get('/events/:id', function(req, res, error) {
                         console.log(event);
                         //TODO: Wetterdaten in event integrieren
                     }); 
-                }
+                };
                 http.request(options, callback).end();
             }
             resultsArray = event;
@@ -275,7 +275,7 @@ router.get('/events/:id', function(req, res, error) {
             });
             res.end(JSON.stringify(jsonObject));
         }
-    })
+    });
 });
 
 router.get('/events/:id/voting/', function(req, res, error) {
@@ -290,7 +290,7 @@ router.get('/events/:id/voting/', function(req, res, error) {
         } else {
             //TODO Return voting data
 
-        };
+        }
     });
 
 });
@@ -301,15 +301,13 @@ router.post('/events/:id/voting/', function(req, res, error) {
 /*
 function zum Hinzufügen neuer Teilnehmer
 */
-router.put('/events/:id/teilnehmer/', function(req, res, error){
-    //var userID = req.body.participant_userID;
-    //var username = req.body.participant_username;
+router.put('/events/:id/teilnehmer', function(req, res, error){
     var newparticipant = req.body;
     //console.log("TEST:userID " + req.body.participant_userID + "username: " + req.body.participant_username);
-    console.log(JSON.stringify(req.body));
+    console.log(JSON.stringify(newparticipant.participant_username));
     eventsCollection.update(
-    {_id: mongodb.helper.toObjectID(req.params.id)},
-    {$push : {participants : newparticipant}}, 
+    {_id: mongoDB.helper.toObjectID(req.params.id)},
+    {$addToSet : {participants : newparticipant}}, 
     function(error, result){
         if (error) {
             console.log("hi");
