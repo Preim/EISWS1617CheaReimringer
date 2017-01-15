@@ -21,16 +21,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 
 public class EventDetailsActivity extends AppCompatActivity {
 
-    String eventID;
+    String eventID, userID;
     private TextView eventIDTv, event_titleTv, event_startTv, event_destTv, event_timeTv, event_dateTv, event_descriptTv, event_organiser;
     String title, start, destination, time, date, description, organiser;
     SharedPreferences pref;
@@ -59,11 +62,22 @@ public class EventDetailsActivity extends AppCompatActivity {
         event_organiser = (TextView) findViewById(R.id.event_organizerTV);
 
         pref = getSharedPreferences("AppPref", MODE_PRIVATE);
+        final String ipAdresse = GlobalClass.getInstance().getIpAddresse();
+        eventID = getIntent().getStringExtra(EventsActivity.eventID);
 
         teilnehmenbtn = (Button) findViewById(R.id.teilnehmenbtn);
+        teilnehmenbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new PutTeilnehmerTask().execute(ipAdresse + "/events/" + eventID + "/teilnehmer");
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+        });
 
-        String ipAdresse = GlobalClass.getInstance().getIpAddresse();
-        eventID = getIntent().getStringExtra(EventsActivity.eventID);
+
+
         new GetVeranstaltungTask().execute(ipAdresse + "/events/" + eventID);
     }
 
@@ -122,6 +136,7 @@ public class EventDetailsActivity extends AppCompatActivity {
             event_organiser.setText("Veranstalter" + organiser);
 
             String pref_organiser = pref.getString("userID", null);
+
             if (organiser.equals(pref_organiser)){
                 teilnehmenbtn.setVisibility(View.GONE);
             }
@@ -192,6 +207,86 @@ public class EventDetailsActivity extends AppCompatActivity {
 
             return result.toString();
         }
+    }
+
+    class PutTeilnehmerTask extends AsyncTask<String, Void, String> {
+
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog = new ProgressDialog(EventDetailsActivity.this);
+            progressDialog.setMessage("Updating data...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                return putTeilnehmer(params[0]);
+            } catch (IOException ex) {
+                return "Network error !";
+            } catch (JSONException ex) {
+                return "DAta invalid !";
+            }
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            //mResult.setText(result);
+
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+        }
+
+        private String putTeilnehmer(String urlPath) throws IOException, JSONException {
+            BufferedWriter bufferedWriter = null;
+            String result = null;
+
+            try {
+                // create data to update
+                String userID = pref.getString("userID", null);
+                JSONObject dataToSend = new JSONObject();
+                dataToSend.put("teilnehmer", userID);
+
+                //Initialize and config request, then connect to server
+                URL url = new URL(urlPath);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setReadTimeout(10000 /* milliseconds */);
+                urlConnection.setConnectTimeout(10000 /* milliseconds */);
+                urlConnection.setRequestMethod("PUT");
+                urlConnection.setDoOutput(true); //enable output (body data)
+                urlConnection.setRequestProperty("Content-Type", "application/json");// set header
+                urlConnection.connect();
+
+                //write data into server
+                OutputStream outputStream = urlConnection.getOutputStream();
+                bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
+                bufferedWriter.write(dataToSend.toString());
+                bufferedWriter.flush();
+
+                // check update successful or not
+                if (urlConnection.getResponseCode() == 200) {
+                    return "Anmeldung erfolgreich!";
+                } else {
+                    return "Anmeldung fehlgeschlagen!";
+                }
+
+            } finally {
+                if (bufferedWriter != null) {
+                    bufferedWriter.close();
+                }
+            }
+
+        }
+
     }
 
 
