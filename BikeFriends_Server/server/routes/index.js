@@ -314,7 +314,7 @@ router.put('/events/:id/teilnehmer/', function(req, res, error){
         }
     });*/
     eventsCollection.update(
-    {_id: mongodb.helper.toObjectID(req.params.id)},
+    {_id: mongodb.helper.toObjectID(req.body.participant_userID)},
     {$addToSet : req.body}, function(error, result){
         if (error) {
             next(error);
