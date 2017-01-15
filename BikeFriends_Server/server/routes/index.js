@@ -298,19 +298,19 @@ router.post('/events/:id/voting/', function(req, res, error) {
 function zum Hinzufügen neuer Teilnehmer
 */
 router.put('/events/:id/teilnehmer/', function(req, res, error){
+    var userID = req.body.participant_userID;
+    var username = req.body.participant_username;
 
-    var userID = req.body.userID;
-    var username;
-    profilesCollection.findOne({_id:mongoDB.helper.toObjectID(userID)},function(error, result){
+   /* profilesCollection.findOne({_id:mongoDB.helper.toObjectID(userID)},function(error, result){
         if (error) {
             next(error);
         }else{
             username = result.username;
         }
-    });
+    });*/
     eventsCollection.update(
     {_id: mongodb.helper.toObjectID(req.params.id)},
-    {$addToSet : {"participants" : {"participant_userID": userID, "participants_username": username}}}, function(error, result){
+    {$addToSet : req.body}, function(error, result){
         if (error) {
             next(error);
         }else{
