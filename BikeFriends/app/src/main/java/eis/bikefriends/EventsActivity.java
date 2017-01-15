@@ -217,7 +217,7 @@ public class EventsActivity extends AppCompatActivity {
                         event.put("title", title);
                         event.put("start", start);
                         event.put("destination", destination);
-                        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.getDefault());
+                        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault());
                         Date jdate = dateformat.parse(date);
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(jdate);

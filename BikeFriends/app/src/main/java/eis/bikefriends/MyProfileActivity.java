@@ -113,7 +113,7 @@ public class MyProfileActivity extends AppCompatActivity {
                     JSONObject jsonObj = new JSONObject(result.toString());
                     String birthdate = jsonObj.getString("birthdate");
                     //So werden ISO 8601 Daten geparst
-                    SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.getDefault());
+                    SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault());
                     Date bdate = dateformat.parse(birthdate);
 
 
