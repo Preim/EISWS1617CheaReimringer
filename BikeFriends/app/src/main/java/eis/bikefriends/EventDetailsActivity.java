@@ -46,7 +46,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     Button teilnehmenbtn;
     ArrayList<HashMap<String, String>> resultsList;
     private ListView resultsLV;
-
+    public final static String intentUserID = "eis.bikefriends.EventsActivity_intentUserID";
 
 
     @Override
@@ -172,7 +172,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                     selectEvent = resultsList.get((int) id);
 
                     String uID = (String)selectEvent.get("participant_userID");
-                    itemInten.putExtra(userID, uID);
+                    itemInten.putExtra(intentUserID, uID);
                     startActivity(itemInten);
                 }
             });

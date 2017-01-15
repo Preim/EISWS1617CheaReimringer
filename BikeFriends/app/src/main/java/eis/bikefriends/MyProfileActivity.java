@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,8 +29,9 @@ import java.util.Locale;
 
 public class MyProfileActivity extends AppCompatActivity {
     TextView nameTv, age_genderTv, radtypTv, speedTv, distanceTv, residenceTV;
+    Button editBtn;
     SharedPreferences pref;
-    String token,userid, bdate_iso, bdate;
+    String token,userid, bdate_iso, bdate, intentUserID;
 
 
     @Override
@@ -41,15 +44,27 @@ public class MyProfileActivity extends AppCompatActivity {
         speedTv = (TextView) findViewById(R.id.speedTv);
         distanceTv = (TextView) findViewById(R.id.distanceTv);
         residenceTV = (TextView) findViewById(R.id.residenceTV);
+        editBtn = (Button) findViewById(R.id.editBtn);
 
         String ipaddress = GlobalClass.getInstance().getIpAddresse();
         pref = getSharedPreferences("AppPref", MODE_PRIVATE);
         token = pref.getString("token", "DEADBEEF");
         userid = pref.getString("userID", "DEADBEEF");
+
+        intentUserID = getIntent().getStringExtra(EventDetailsActivity.intentUserID);
+
         //TODO Generate Dummy Profile #DEADBEEF?
 
-        new GetMyProfileTask().execute(ipaddress + "/profiles/" + userid );
-
+        if (intentUserID!=null){
+            if (intentUserID.equals(userid)){
+                new GetMyProfileTask().execute(ipaddress + "/profiles/" + userid);
+            }else {
+                new GetMyProfileTask().execute(ipaddress + "/profiles/" + intentUserID);
+                editBtn.setVisibility(View.GONE);
+            }
+        }else {
+            new GetMyProfileTask().execute(ipaddress + "/profiles/" + userid);
+        }
         //Toolbar
         if(getSupportActionBar()!=null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
