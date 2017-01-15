@@ -10,7 +10,13 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <service android:name=".MyFirebaseInstanceIDService">
+    <service android:name=".FirebaseMessagingService">
+        <intent-filter>
+            <action android:name="com.google.firebase.Messaging_EVENT"/>
+        </intent-filter>
+    </service>
+
+    <service android:name=".FirebaseInstanceIDService">
         <intent-filter>
             <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
         </intent-filter>
