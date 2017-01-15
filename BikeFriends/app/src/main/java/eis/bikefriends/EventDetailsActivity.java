@@ -216,8 +216,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                     description = event.getString("description");
                     organiser = event.getString("organiser");
                     Log.d("json", jsonObj.toString());
-
-                    JSONArray results = jsonObj.getJSONArray("participants");
+                    Log.d("jsonarray", "test");
+                    JSONArray results = event.getJSONArray("participants");
 
                     for (int i = 0; i < results.length(); i++) {
                         JSONObject r = results.getJSONObject(i);
@@ -231,6 +231,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                         teilnehmer.put("participant_username", name);
 
                         resultsList.add(teilnehmer);
+                        Log.d("jsonarray", name.toString());
                     }
 
 
@@ -308,7 +309,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                 JSONObject dataToSend = new JSONObject();
                 dataToSend.put("participant_userID", userID);
                 dataToSend.put("participant_username",userName);
-                Log.d("json",dataToSend.toString());
+                Log.d("json to send",dataToSend.toString());
                 //Initialize and config request, then connect to server
                 URL url = new URL(urlPath);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
