@@ -147,13 +147,35 @@ public class EventDetailsActivity extends AppCompatActivity {
 
             String pref_organiser = pref.getString("userID", null);
 
-            if (organiser.equals(pref_organiser)){
+            /*if (organiser.equals(pref_organiser)){
                 teilnehmenbtn.setVisibility(View.GONE);
-            }
+            }*/
 
             if(getSupportActionBar()!=null){
                 getSupportActionBar().setTitle(title);
             }
+
+            ListAdapter adapter = new SimpleAdapter(
+                    EventDetailsActivity.this, resultsList,
+                    R.layout.participants_list_item, new String[]{"participant_username", "participant_userID"},
+                    new int[]{R.id.teilnehmerName, R.id.userIDTV});
+
+            resultsLV.setAdapter(adapter);
+
+            //OnItemClick getEventID
+            //Intent mit EventID auf MyProfileActivty
+            resultsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent itemInten = new Intent(EventDetailsActivity.this, MyProfileActivity.class);
+                    HashMap<String, String> selectEvent = new HashMap<>();
+                    selectEvent = resultsList.get((int) id);
+
+                    String uID = (String)selectEvent.get("participant_userID");
+                    itemInten.putExtra(userID, uID);
+                    startActivity(itemInten);
+                }
+            });
 
         }
 
@@ -193,143 +215,24 @@ public class EventDetailsActivity extends AppCompatActivity {
                     time = event.getString("time");
                     description = event.getString("description");
                     organiser = event.getString("organiser");
+                    Log.d("json", jsonObj.toString());
 
-
-                } catch (final JSONException e) {
-                    Log.e("parsingError", "Json parsing error: " + e.getMessage());
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(),
-                                    "Json parsing error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    });
-                }
-            } finally {
-                if (bufferedReader != null) {
-                    bufferedReader.close();
-                }
-            }
-            Log.d("json", result.toString());
-
-
-            return result.toString();
-        }
-    }
-
-    class GetTeilnehmerTask extends AsyncTask<String, Void, String> {
-
-        ProgressDialog progressDialog;
-
-        @Override
-        protected void onPreExecute() {
-
-            super.onPreExecute();
-
-            progressDialog = new ProgressDialog(EventDetailsActivity.this);
-            progressDialog.setMessage("Lade Veranstaltung...");
-            progressDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                return getTeilnehmer(params[0]);
-            } catch (IOException ex) {
-                return "Network error!";
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-
-            //Prüfen, ob der Betrachter der Veranstalter ist. Wenn wahr, teilnehmenbtn verbergen
-
-
-            if (progressDialog != null) {
-                progressDialog.dismiss();
-            }
-
-            String pref_organiser = pref.getString("userID", null);
-
-            if (organiser.equals(pref_organiser)){
-                teilnehmenbtn.setVisibility(View.GONE);
-            }
-
-            if(getSupportActionBar()!=null){
-                getSupportActionBar().setTitle(title);
-            }
-
-            ListAdapter adapter = new SimpleAdapter(
-                    EventDetailsActivity.this, resultsList,
-                    R.layout.participants_list_item, new String[]{"Name", "id"},
-                    new int[]{R.id.teilnehmerName});
-
-            resultsLV.setAdapter(adapter);
-
-            //OnItemClick getEventID
-            //Intent mit EventID auf MyProfileActivty
-            resultsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent itemInten = new Intent(EventDetailsActivity.this, MyProfileActivity.class);
-                    HashMap<String, String> selectEvent = new HashMap<>();
-                    selectEvent = resultsList.get((int) id);
-
-                    String eID = (String)selectEvent.get("id");
-                    itemInten.putExtra(eventID, eID);
-                    startActivity(itemInten);
-                }
-            });
-        }
-
-        private String getTeilnehmer(String urlPath) throws IOException {
-            StringBuilder result = new StringBuilder();
-            BufferedReader bufferedReader = null;
-
-            try {
-                //connect zum server
-                URL url = new URL(urlPath);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setReadTimeout(10000 /* milliseconds */);
-                urlConnection.setConnectTimeout(10000 /* milliseconds */);
-                urlConnection.setRequestMethod("GET");
-                urlConnection.setRequestProperty("Content-Type", "application/json");// set header
-                urlConnection.connect();
-
-                //Read data response
-                InputStream inputStream = urlConnection.getInputStream();
-                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    result.append(line).append("\n");
-                    Log.d("json", line);
-                }
-
-                try {
-
-
-                    JSONObject jsonObj = new JSONObject(result.toString());
-
-                    JSONArray results = jsonObj.getJSONArray("results");
+                    JSONArray results = jsonObj.getJSONArray("participants");
 
                     for (int i = 0; i < results.length(); i++) {
                         JSONObject r = results.getJSONObject(i);
 
-                        String name = r.getString("name");
-                        String userid = r.getString("userid");
+                        String name = r.getString("participant_username");
+                        String userid = r.getString("participant_userID");
 
-                        HashMap<String, String> event = new HashMap<>();
+                        HashMap<String, String> teilnehmer = new HashMap<>();
 
-                        event.put("id", userid);
-                        event.put("name", name);
+                        teilnehmer.put("participant_userID", userid);
+                        teilnehmer.put("participant_username", name);
 
-                        resultsList.add(event);
+                        resultsList.add(teilnehmer);
                     }
+
 
                 } catch (final JSONException e) {
                     Log.e("parsingError", "Json parsing error: " + e.getMessage());
@@ -375,7 +278,7 @@ public class EventDetailsActivity extends AppCompatActivity {
             } catch (IOException ex) {
                 return "Network error !";
             } catch (JSONException ex) {
-                return "DAta invalid !";
+                return "Data invalid !";
             }
 
 
@@ -399,9 +302,13 @@ public class EventDetailsActivity extends AppCompatActivity {
             try {
                 // create data to update
                 String userID = pref.getString("userID", null);
-                JSONObject dataToSend = new JSONObject();
-                dataToSend.put("teilnehmer", userID);
+                String userName = pref.getString("username", null);
 
+
+                JSONObject dataToSend = new JSONObject();
+                dataToSend.put("participant_userID", userID);
+                dataToSend.put("participant_username",userName);
+                Log.d("json",dataToSend.toString());
                 //Initialize and config request, then connect to server
                 URL url = new URL(urlPath);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
