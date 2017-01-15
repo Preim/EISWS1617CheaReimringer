@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +30,12 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class EventDetailsActivity extends AppCompatActivity {
 
@@ -38,6 +44,8 @@ public class EventDetailsActivity extends AppCompatActivity {
     String title, start, destination, time, date, description, organiser;
     SharedPreferences pref;
     Button teilnehmenbtn;
+    ArrayList<HashMap<String, String>> resultsList;
+    private ListView resultsLV;
 
 
 
@@ -45,6 +53,8 @@ public class EventDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_details);
+        resultsList = new ArrayList<>();
+        resultsLV = (ListView) findViewById(R.id.participantsLV);
 
         //Toolbar
         if (getSupportActionBar() != null) {
@@ -184,6 +194,142 @@ public class EventDetailsActivity extends AppCompatActivity {
                     description = event.getString("description");
                     organiser = event.getString("organiser");
 
+
+                } catch (final JSONException e) {
+                    Log.e("parsingError", "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+                }
+            } finally {
+                if (bufferedReader != null) {
+                    bufferedReader.close();
+                }
+            }
+            Log.d("json", result.toString());
+
+
+            return result.toString();
+        }
+    }
+
+    class GetTeilnehmerTask extends AsyncTask<String, Void, String> {
+
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+
+            super.onPreExecute();
+
+            progressDialog = new ProgressDialog(EventDetailsActivity.this);
+            progressDialog.setMessage("Lade Veranstaltung...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                return getTeilnehmer(params[0]);
+            } catch (IOException ex) {
+                return "Network error!";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+
+            //Prüfen, ob der Betrachter der Veranstalter ist. Wenn wahr, teilnehmenbtn verbergen
+
+
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+
+            String pref_organiser = pref.getString("userID", null);
+
+            if (organiser.equals(pref_organiser)){
+                teilnehmenbtn.setVisibility(View.GONE);
+            }
+
+            if(getSupportActionBar()!=null){
+                getSupportActionBar().setTitle(title);
+            }
+
+            ListAdapter adapter = new SimpleAdapter(
+                    EventDetailsActivity.this, resultsList,
+                    R.layout.participants_list_item, new String[]{"Name", "id"},
+                    new int[]{R.id.teilnehmerName});
+
+            resultsLV.setAdapter(adapter);
+
+            //OnItemClick getEventID
+            //Intent mit EventID auf MyProfileActivty
+            resultsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent itemInten = new Intent(EventDetailsActivity.this, MyProfileActivity.class);
+                    HashMap<String, String> selectEvent = new HashMap<>();
+                    selectEvent = resultsList.get((int) id);
+
+                    String eID = (String)selectEvent.get("id");
+                    itemInten.putExtra(eventID, eID);
+                    startActivity(itemInten);
+                }
+            });
+        }
+
+        private String getTeilnehmer(String urlPath) throws IOException {
+            StringBuilder result = new StringBuilder();
+            BufferedReader bufferedReader = null;
+
+            try {
+                //connect zum server
+                URL url = new URL(urlPath);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setReadTimeout(10000 /* milliseconds */);
+                urlConnection.setConnectTimeout(10000 /* milliseconds */);
+                urlConnection.setRequestMethod("GET");
+                urlConnection.setRequestProperty("Content-Type", "application/json");// set header
+                urlConnection.connect();
+
+                //Read data response
+                InputStream inputStream = urlConnection.getInputStream();
+                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    result.append(line).append("\n");
+                    Log.d("json", line);
+                }
+
+                try {
+
+
+                    JSONObject jsonObj = new JSONObject(result.toString());
+
+                    JSONArray results = jsonObj.getJSONArray("results");
+
+                    for (int i = 0; i < results.length(); i++) {
+                        JSONObject r = results.getJSONObject(i);
+
+                        String name = r.getString("name");
+                        String userid = r.getString("userid");
+
+                        HashMap<String, String> event = new HashMap<>();
+
+                        event.put("id", userid);
+                        event.put("name", name);
+
+                        resultsList.add(event);
+                    }
 
                 } catch (final JSONException e) {
                     Log.e("parsingError", "Json parsing error: " + e.getMessage());
