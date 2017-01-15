@@ -382,9 +382,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     if(json_result.getBoolean("res")){
                         String token = json_result.getString("token");
                         String userID = json_result.getString("userID");
+                        String username = json_result.getString("username");
                         SharedPreferences.Editor edit = pref.edit();
                         edit.putString("token", token);
                         edit.putString("userID", userID);
+                        edit.putString("username", username);
                         edit.commit();
                         Intent loginIntent = new Intent(LoginActivity.this, MainmenuActivity.class);
                         LoginActivity.this.startActivity(loginIntent);

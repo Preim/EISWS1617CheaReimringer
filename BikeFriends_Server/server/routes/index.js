@@ -290,6 +290,31 @@ router.post('/events/:id/voting/', function(req, res, error) {
     //TODO submit vote
 });
 
+/*
+function zum Hinzufügen neuer Teilnehmer
+*/
+router.put('/events/:id/teilnehmer/', function(req, res, error){
+
+    var userID = req.body.userID;
+    var username;
+    profilesCollection.findOne({_id:mongoDB.helper.toObjectID(userID)},function(error, result){
+        if (error) {
+            next(error);
+        }else{
+            username = result.username;
+        }
+    });
+    eventsCollection.update(
+    {_id: mongodb.helper.toObjectID(req.params.id)},
+    {$addToSet : {"participants" : {"participant_userID": userID, "participants_username": username}}}, function(error, result){
+        if (error) {
+            next(error);
+        }else{
+            res.json({response: "Teilnehmer hinzugefügt"});
+        }
+    })
+})
+
 
 router.post('/register', function(req,res){
     var username = req.body.username;

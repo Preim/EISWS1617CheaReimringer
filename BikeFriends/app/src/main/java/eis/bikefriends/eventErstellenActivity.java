@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SyncStatusObserver;
 import android.os.AsyncTask;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.app.TimePickerDialog;
 import android.widget.TimePicker;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -193,8 +195,21 @@ public class eventErstellenActivity extends AppCompatActivity implements View.On
                 dataToSend.put("time", inputTime.getText().toString().trim());
                 dataToSend.put("date", inputDate.getText().toString().trim());
                 dataToSend.put("description", inputDescription.getText().toString().trim());
-                String organiser = pref.getString("userID", null);
-                dataToSend.put("organiser", organiser);
+                String organiser_userID = pref.getString("userID", null);
+                String organiser_username = pref.getString("username", null);
+                dataToSend.put("organiser", organiser_userID);
+
+                //Array participants erstellen und Veranstalter mit userid und username hinzufügen
+                JSONArray participants = new JSONArray();
+
+                JSONObject this_user = new JSONObject();
+                this_user.put("participant_userID", organiser_userID);
+                this_user.put("participant_username", organiser_username);
+                participants.put(this_user);
+
+                dataToSend.put("participants", participants);
+                Log.d("json", dataToSend.toString());
+
 
 
 
