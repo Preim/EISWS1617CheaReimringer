@@ -42,7 +42,7 @@ router.get('/profiles', function(req, res, next) {
     });
 });
 
-/* GET /profiles */
+/* GET Matches */
 router.get('/profiles/:id/matches', function(req, res) {
     // Update. Wenn nicht existent, insert.
     var user;
@@ -51,55 +51,59 @@ router.get('/profiles/:id/matches', function(req, res) {
             res.json({response: "Profil nicht gefunden."});
         }else{
             user = result;
-        }
-    })
+            console.log("ergebniss " + result.residence);
+            console.log("user: " + user.residence);
+            console.log("result: " + result.residence);
 
-    //matching kriterien festlegen
-    // Matchingkriterien: Gemeinsame Radsportart, Durchschnitliche Geschwindigkeit ist min. 2km/h bzw. max. 2km/h groesser als medianSpeed
-    //var matching_sports = req.body.bikesports[0];
-    var location = user.residence;
-    if (user.bikesports!=null) {
-        var medianSpeed = req.body.averageSpeed;
-        var minSpeed = medianSpeed - 2;
-        if (minSpeed > 0) {
-            minSpeed = 0;
-        };
-        var maxSpeed = medianSpeed + 2;
-    }
-    var resultsArray;
-    profilesCollection.find(
-/*    {
-        $and: [{
-            bikesports: user.bikesports
-        }, {
-            averageSpeed: {
-                $gte: minSpeed
+            //matching kriterien festlegen
+            // Matchingkriterien: Gemeinsame Radsportart, Durchschnitliche Geschwindigkeit ist min. 2km/h bzw. max. 2km/h groesser als medianSpeed
+            //var matching_sports = req.body.bikesports[0];
+            var location = user.residence;
+            if (user.bikesports!==null) {
+                var medianSpeed = req.body.averageSpeed;
+                var minSpeed = medianSpeed - 2;
+                if (minSpeed > 0) {
+                    minSpeed = 0;
+                }
+                var maxSpeed = medianSpeed + 2;
             }
-        }, {
-            averageSpeed: {
-                $lte: maxSpeed
+            var resultsArray;
+            profilesCollection.find(
+        /*    {
+                $and: [{
+                    bikesports: user.bikesports
+                }, {
+                    averageSpeed: {
+                        $gte: minSpeed
+                    }
+                }, {
+                    averageSpeed: {
+                        $lte: maxSpeed
+                    }
+                }, ]
+            }*/
+            {
+            residence: user.residence
             }
-        }, ]
-    }*/
-    {
-    residence: user.residence
-    }
 
-    ).toArray(function(error, results) {
-        if (error)
-            next(error);
-        else {
-            console.log(results);
-            resultsArray = results;
-            var jsonObject = {
-                results: resultsArray
-            };
-            res.writeHead(200, {
-                'Content-Type': 'application/json'
+            ).toArray(function(error, results) {
+                if (error)
+                    next(error);
+                else {
+                    console.log(results);
+                    resultsArray = results;
+                    var jsonObject = {
+                        results: resultsArray
+                    };
+                    res.writeHead(200, {
+                        'Content-Type': 'application/json'
+                    });
+                    res.end(JSON.stringify(jsonObject));
+                }
             });
-            res.end(JSON.stringify(jsonObject));
-        };
+        }
     });
+
 });
 
 
@@ -300,6 +304,7 @@ function zum Hinzufügen neuer Teilnehmer
 router.put('/events/:id/teilnehmer/', function(req, res, error){
     var userID = req.body.participant_userID;
     var username = req.body.participant_username;
+    console.log("TEST:userID " + req.body.participant_userID + "username: " + req.body.participant_username);
 
    /* profilesCollection.findOne({_id:mongoDB.helper.toObjectID(userID)},function(error, result){
         if (error) {

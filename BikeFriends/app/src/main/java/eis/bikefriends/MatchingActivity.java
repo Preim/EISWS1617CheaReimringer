@@ -51,7 +51,7 @@ public class MatchingActivity extends AppCompatActivity   {
         pref = getSharedPreferences("AppPref", MODE_PRIVATE);
         userID = pref.getString("userID", null);
 
-        new GetMatchesTask().execute(ipAdresse + "/profiles/" + userID);
+        new GetMatchesTask().execute(ipAdresse + "/profiles/" + userID + "/matches");
     }
 
     class GetMatchesTask extends AsyncTask<String, Void, String>{
