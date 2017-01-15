@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "35485526184-c46785m1vs7gm6c2go5gq7p5p3s3emih.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "eis.bikefriends",
+            "certificate_hash": "76D0ACD3402F3B638ADFC8C1D015214132784A5B"
+          }
+        },
+        {
           "client_id": "35485526184-tf1snajaqlcv3ten38p5jfrg7tfpqqna.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
