@@ -186,7 +186,7 @@ public class MyProfileActivity extends AppCompatActivity {
             return result.toString();
         }
     }
-    public int getAge(Date bdate){
+    private int getAge(Date bdate){
         Calendar calendar = Calendar.getInstance();
         int currentYear = calendar.get(Calendar.YEAR);
         calendar.setTime(bdate);

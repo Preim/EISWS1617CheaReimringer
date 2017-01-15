@@ -53,7 +53,8 @@
                 android:inputType="textPassword"
                 android:ems="10"
                 android:id="@+id/passwordET"
-                android:hint="Passwort" />
+                android:hint="Passwort"
+                android:text="hallo123" />
         </android.support.design.widget.TextInputLayout>
 
         <RadioGroup

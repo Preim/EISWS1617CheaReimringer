@@ -43,35 +43,34 @@ router.get('/profiles', function(req, res, next) {
 });
 
 /* GET /profiles */
-router.post('/profiles', function(req, res) {
+router.get('/profiles/:id/matches', function(req, res) {
     // Update. Wenn nicht existent, insert.
-    profilesCollection.update({
-        id: req.body.id
-    }, req.body, {
-        upsert: true
-    }, function(error) {
-        if (error) {
-            return console.log('could not update');
-        };
-        console.log('updated. (upsert: true)');
-    });
-
+    var user;
+    profilesCollection.findOne({_id:mongoDB.helper.toObjectID(req.params.id)},function(error, result){
+        if (error){
+            res.json({response: "Profil nicht gefunden."});
+        }else{
+            user = result;
+        }
+    })
 
     //matching kriterien festlegen
     // Matchingkriterien: Gemeinsame Radsportart, Durchschnitliche Geschwindigkeit ist min. 2km/h bzw. max. 2km/h groesser als medianSpeed
-    var matching_sports = req.body.bikesports[0];
-    var location = req.body.location;
-    var medianSpeed = req.body.averageSpeed;
-    var minSpeed = medianSpeed - 2;
-    if (minSpeed > 0) {
-        minSpeed = 0;
-    };
-    var maxSpeed = medianSpeed + 2;
-    console.log(matching_sports);
+    //var matching_sports = req.body.bikesports[0];
+    var location = user.residence;
+    if (user.bikesports!=null) {
+        var medianSpeed = req.body.averageSpeed;
+        var minSpeed = medianSpeed - 2;
+        if (minSpeed > 0) {
+            minSpeed = 0;
+        };
+        var maxSpeed = medianSpeed + 2;
+    }
     var resultsArray;
-    profilesCollection.find({
+    profilesCollection.find(
+/*    {
         $and: [{
-            bikesports: matching_sports
+            bikesports: user.bikesports
         }, {
             averageSpeed: {
                 $gte: minSpeed
@@ -81,7 +80,12 @@ router.post('/profiles', function(req, res) {
                 $lte: maxSpeed
             }
         }, ]
-    }).toArray(function(error, results) {
+    }*/
+    {
+    residence: user.residence
+    }
+
+    ).toArray(function(error, results) {
         if (error)
             next(error);
         else {
@@ -126,9 +130,9 @@ router.get('/profiles/:id', function(req, res, error) {
     });
 });
 
-router.get('/profiles/:id/matches', function(res, req, error) {
+/*router.get('/profiles/:id/matches', function(res, req, error) {
     //TODO Determine(?) and get User's Matches
-});
+});*/
 
 router.post('/profiles/:id/matches', function(res, req, error) {
     //Not used
