@@ -302,27 +302,27 @@ router.post('/events/:id/voting/', function(req, res, error) {
 function zum Hinzufügen neuer Teilnehmer
 */
 router.put('/events/:id/teilnehmer/', function(req, res, error){
-    var userID = req.body.participant_userID;
-    var username = req.body.participant_username;
-    console.log("TEST:userID " + req.body.participant_userID + "username: " + req.body.participant_username);
-
-   /* profilesCollection.findOne({_id:mongoDB.helper.toObjectID(userID)},function(error, result){
-        if (error) {
-            next(error);
-        }else{
-            username = result.username;
-        }
-    });*/
+    //var userID = req.body.participant_userID;
+    //var username = req.body.participant_username;
+    var newparticipant = req.body;
+    //console.log("TEST:userID " + req.body.participant_userID + "username: " + req.body.participant_username);
+    console.log(JSON.stringify(req.body));
     eventsCollection.update(
-    {_id: mongodb.helper.toObjectID(req.body.participant_userID)},
-    {$addToSet : req.body}, function(error, result){
+    {_id: mongodb.helper.toObjectID(req.params.id)},
+    {$push : {participants : newparticipant}}, 
+    function(error, result){
         if (error) {
+            console.log("hi");
+            console.log(error);
             next(error);
         }else{
-            res.json({response: "Teilnehmer hinzugefügt"});
+            console.log("success");
+            //res.json({response: "Teilnehmer hinzugefügt"});
+            res.writeHead(200, 'OK');
+            res.end();
         }
-    })
-})
+    });
+});
 
 
 router.post('/register', function(req,res){
