@@ -71,10 +71,13 @@ public class EventDetailsActivity extends AppCompatActivity {
         eventIDTv = (TextView) findViewById(R.id.eventIDTv);
         event_organiser = (TextView) findViewById(R.id.event_organizerTV);
 
+        //Shared Preferences aufrufen
         pref = getSharedPreferences("AppPref", MODE_PRIVATE);
         final String ipAdresse = GlobalClass.getInstance().getIpAddresse();
         eventID = getIntent().getStringExtra(EventsActivity.eventID);
 
+
+        //Benutzer trägt sich als Teilnehmer ein per Button
         teilnehmenbtn = (Button) findViewById(R.id.teilnehmenbtn);
         teilnehmenbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,11 +90,11 @@ public class EventDetailsActivity extends AppCompatActivity {
         });
 
 
-
+        //Veranstaltungen vom Server laden und anzeigen
         new GetVeranstaltungTask().execute(ipAdresse + "/events/" + eventID);
     }
 
-    //Toolbar back
+    //Toolbar back Button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home)
@@ -99,7 +102,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    //Veranstaltungen vom Server laden und anzeigen
     class GetVeranstaltungTask extends AsyncTask<String, Void, String> {
 
         ProgressDialog progressDialog;
@@ -135,7 +138,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                 progressDialog.dismiss();
             }
 
-
+            //zuweisung der Strings zu den jeweiligen TextViews
             eventIDTv.setText("Event ID: " + eventID);
             event_titleTv.setText(title);
             event_startTv.setText("Start: " + start);
@@ -155,6 +158,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle(title);
             }
 
+
+            //Arraylist Daten werden dem ListView zugewiesen
             ListAdapter adapter = new SimpleAdapter(
                     EventDetailsActivity.this, resultsList,
                     R.layout.participants_list_item, new String[]{"participant_username", "participant_userID"},
@@ -178,6 +183,7 @@ public class EventDetailsActivity extends AppCompatActivity {
             });
 
         }
+
 
         private String getVeranstaltung(String urlPath) throws IOException {
             StringBuilder result = new StringBuilder();
@@ -204,7 +210,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
                 try {
 
-
+                    //Json Object auslesen
                     JSONObject jsonObj = new JSONObject(result.toString());
                     JSONObject event = jsonObj.getJSONObject("results");
 
@@ -225,6 +231,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                         String name = r.getString("participant_username");
                         String userid = r.getString("participant_userID");
 
+                        //Teilnehmer werden einer HashMap zugewiesen
                         HashMap<String, String> teilnehmer = new HashMap<>();
 
                         teilnehmer.put("participant_userID", userid);
@@ -259,6 +266,8 @@ public class EventDetailsActivity extends AppCompatActivity {
         }
     }
 
+
+    //Teilnehmer einem Event hinzufügen
     class PutTeilnehmerTask extends AsyncTask<String, Void, String> {
 
         ProgressDialog progressDialog;
