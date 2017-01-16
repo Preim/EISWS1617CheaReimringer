@@ -38,8 +38,7 @@ public class MatchingActivity extends AppCompatActivity   {
     ArrayList<HashMap<String, String>> resultsList;
     SharedPreferences pref;
     String ipAdresse, userID;
-    private String e_id;
-    public final static String matchID = "eis.bikefriends.MatchingActivity_matchID";
+    public final static String intentMatchingID = "eis.bikefriends.MatchingActivity_matchID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +86,7 @@ public class MatchingActivity extends AppCompatActivity   {
             }
             ListAdapter adapter = new SimpleAdapter(
                     MatchingActivity.this, resultsList,
-                    R.layout.matchinglist_item, new String[]{"id","username", "age_gender", "residence"},
+                    R.layout.matchinglist_item, new String[]{"username", "age_gender", "residence"},
                     new int[]{R.id.mNameTV, R.id.mAge_GenderTV, R.id.mResidenceTV});
 
             resultsLV.setAdapter(adapter);
@@ -102,7 +101,8 @@ public class MatchingActivity extends AppCompatActivity   {
                     selectEvent = resultsList.get((int) id);
 
                     String eID = (String)selectEvent.get("id");
-                    itemIntent.putExtra(matchID, eID);
+                    Log.d("Match User ID:", eID);
+                    itemIntent.putExtra(intentMatchingID, eID);
                     startActivity(itemIntent);
                 }
             });
@@ -140,7 +140,7 @@ public class MatchingActivity extends AppCompatActivity   {
                     for (int i = 0; i < results.length(); i++) {
                         JSONObject r = results.getJSONObject(i);
 
-                        e_id = r.getString("_id");
+                        String e_id = r.getString("_id");
                         String username = r.getString("username");
 
                         String birthdate = r.getString("birthdate");

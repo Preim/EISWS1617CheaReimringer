@@ -31,7 +31,7 @@ public class MyProfileActivity extends AppCompatActivity {
     TextView nameTv, age_genderTv, radtypTv, speedTv, distanceTv, residenceTV;
     Button editBtn;
     SharedPreferences pref;
-    String token,userid, bdate_iso, bdate, intentUserID;
+    String token,userid, bdate_iso, bdate, intentUserID, intentMatchingID;
 
 
     @Override
@@ -52,14 +52,18 @@ public class MyProfileActivity extends AppCompatActivity {
         userid = pref.getString("userID", "DEADBEEF");
 
         intentUserID = getIntent().getStringExtra(EventDetailsActivity.intentUserID);
+        intentMatchingID = getIntent().getStringExtra(MatchingActivity.intentMatchingID);
 
         //TODO Generate Dummy Profile #DEADBEEF?
 
-        if (intentUserID!=null){
-            if (intentUserID.equals(userid)){
+        if (intentUserID!=null || intentMatchingID!=null){
+            if (intentUserID.equals(userid) || intentMatchingID.equals(userid)){
                 new GetMyProfileTask().execute(ipaddress + "/profiles/" + userid);
-            }else {
+            }else if (intentUserID!=null){
                 new GetMyProfileTask().execute(ipaddress + "/profiles/" + intentUserID);
+                editBtn.setVisibility(View.GONE);
+            }else if (intentMatchingID!=null){
+                new GetMyProfileTask().execute(ipaddress + "/profiles/" + intentMatchingID);
                 editBtn.setVisibility(View.GONE);
             }
         }else {
