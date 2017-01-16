@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.Manifest;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,7 +18,8 @@ import android.widget.ToggleButton;
 //TODO: Radtypauswahl
 //TODO: Kalibrierung durchführen
 //TODO: Ermittelten Wert persistent speichern
-public class CalibrationActivity extends AppCompatActivity implements LocationListener {
+//TODO: Notfalls Eigene Werte eintragen
+public class CalibrationActivity extends AppCompatActivity {
     private static String LOCATION_PERMISSIONS[] = new String[]{
             Manifest.permission.READ_CONTACTS,
             Manifest.permission.WRITE_CONTACTS
@@ -52,8 +54,29 @@ public class CalibrationActivity extends AppCompatActivity implements LocationLi
             requestPermissions(LOCATION_PERMISSIONS, REQUEST_LOCATIONS_CODE);
             return;
         }
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-        this.onLocationChanged(null);
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                location.getLatitude();
+                Log.d("gps", location.toString());
+                float currentSpeed = location.getTime();
+                currentSpeedTV.setText(currentSpeed + " m/s");
+                Toast.makeText(CalibrationActivity.this, "Current speed:" + location.getSpeed(),
+                        Toast.LENGTH_SHORT).show();
+
+            }
+
+            public void onStatusChanged(String provider, int status,
+                                        Bundle extras) {
+            }
+
+            public void onProviderEnabled(String provider) {
+            }
+
+            public void onProviderDisabled(String provider) {
+            }
+        };
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        //this.onLocationChanged(null);
 
 
         //Toolbar
@@ -89,30 +112,30 @@ public class CalibrationActivity extends AppCompatActivity implements LocationLi
     }
 
 
-    @Override
+/*    @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
 
     }
 
-    /**
+    *//**
      * Called when the provider is enabled by the user.
      *
      * @param provider the name of the location provider associated with this
      *                 update.
-     */
+     *//*
     @Override
     public void onProviderEnabled(String provider) {
 
     }
 
-    /**
+    *//**
      * Called when the provider is disabled by the user. If requestLocationUpdates
      * is called on an already disabled provider, this method is called
      * immediately.
      *
      * @param provider the name of the location provider associated with this
      *                 update.
-     */
+     *//*
     @Override
     public void onProviderDisabled(String provider) {
 
@@ -127,7 +150,9 @@ public class CalibrationActivity extends AppCompatActivity implements LocationLi
         }else {
             float currentSpeed = location.getSpeed();
             currentSpeedTV.setText(currentSpeed + " m/s");
+            Toast.makeText(CalibrationActivity.this, "Current Position:" + location.getLatitude(),
+                    Toast.LENGTH_SHORT).show();
         }
 
-    }
+    }*/
 }
