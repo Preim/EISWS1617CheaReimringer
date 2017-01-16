@@ -86,7 +86,7 @@ public class MatchingActivity extends AppCompatActivity   {
             }
             ListAdapter adapter = new SimpleAdapter(
                     MatchingActivity.this, resultsList,
-                    R.layout.matchinglist_item, new String[]{"username", "age_gender", "residence"},
+                    R.layout.matchinglist_item, new String[]{"username", "age_gender", "residence", "id"},
                     new int[]{R.id.mNameTV, R.id.mAge_GenderTV, R.id.mResidenceTV});
 
             resultsLV.setAdapter(adapter);

@@ -19,7 +19,7 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
+        android:layout_width="218dp"
         android:layout_height="match_parent">
 
         <TextView
@@ -44,17 +44,21 @@
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/mResidenceTV"
-            android:layout_below="@+id/mAverageSpeedTV"
-            android:layout_toEndOf="@+id/mAge_GenderTV" />
-
+            android:id="@+id/mAverageSpeedTV"
+            android:layout_below="@+id/mAge_GenderTV"
+            android:layout_toEndOf="@+id/mResidenceTV" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:layout_weight="00">
         <TextView
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/mAverageSpeedTV"
-            android:layout_below="@+id/mAge_GenderTV"
-            android:layout_toEndOf="@+id/mResidenceTV" />
+            android:id="@+id/mResidenceTV"
+            android:layout_below="@+id/mAverageSpeedTV"
+            android:layout_toEndOf="@+id/mAge_GenderTV" />
     </LinearLayout>
 
 </LinearLayout>

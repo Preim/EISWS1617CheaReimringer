@@ -50,24 +50,27 @@ public class MyProfileActivity extends AppCompatActivity {
         pref = getSharedPreferences("AppPref", MODE_PRIVATE);
         token = pref.getString("token", "DEADBEEF");
         userid = pref.getString("userID", "DEADBEEF");
+        String tmdID;
 
         intentUserID = getIntent().getStringExtra(EventDetailsActivity.intentUserID);
         intentMatchingID = getIntent().getStringExtra(MatchingActivity.intentMatchingID);
 
         //TODO Generate Dummy Profile #DEADBEEF?
 
-        if (intentUserID!=null || intentMatchingID!=null){
-            if (intentUserID.equals(userid) || intentMatchingID.equals(userid)){
-                new GetMyProfileTask().execute(ipaddress + "/profiles/" + userid);
-            }else if (intentUserID!=null){
-                new GetMyProfileTask().execute(ipaddress + "/profiles/" + intentUserID);
-                editBtn.setVisibility(View.GONE);
-            }else if (intentMatchingID!=null){
-                new GetMyProfileTask().execute(ipaddress + "/profiles/" + intentMatchingID);
-                editBtn.setVisibility(View.GONE);
-            }
-        }else {
-            new GetMyProfileTask().execute(ipaddress + "/profiles/" + userid);
+        tmdID = userid;
+
+        if (intentUserID!=null) {
+            tmdID = intentUserID;
+        }
+        if (intentMatchingID!=null) {
+            tmdID = intentMatchingID;
+        }
+
+        if (tmdID.equals(userid)){
+            new GetMyProfileTask().execute(ipaddress + "/profiles/" + tmdID);
+        }else{
+            new GetMyProfileTask().execute(ipaddress + "/profiles/" + tmdID);
+            editBtn.setVisibility(View.GONE);
         }
         //Toolbar
         if(getSupportActionBar()!=null){
