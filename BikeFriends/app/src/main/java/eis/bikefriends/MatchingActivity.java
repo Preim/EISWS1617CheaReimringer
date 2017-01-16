@@ -46,7 +46,7 @@ public class MatchingActivity extends AppCompatActivity   {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matching);
         resultsList = new ArrayList<>();
-        resultsLV = (ListView) findViewById(R.id.resultsLV);
+        resultsLV = (ListView) findViewById(R.id.lvItems);
         ipAdresse = GlobalClass.getInstance().getIpAddresse();
         pref = getSharedPreferences("AppPref", MODE_PRIVATE);
         userID = pref.getString("userID", null);
@@ -87,7 +87,7 @@ public class MatchingActivity extends AppCompatActivity   {
             }
             ListAdapter adapter = new SimpleAdapter(
                     MatchingActivity.this, resultsList,
-                    R.layout.matchinglist_item, new String[]{"username", "age_gender", "residence"},
+                    R.layout.matchinglist_item, new String[]{"id","username", "age_gender", "residence"},
                     new int[]{R.id.mNameTV, R.id.mAge_GenderTV, R.id.mResidenceTV});
 
             resultsLV.setAdapter(adapter);
@@ -133,7 +133,6 @@ public class MatchingActivity extends AppCompatActivity   {
 
                 try {
 
-                    //TODO: Parse Results
                     JSONObject jsonObj = new JSONObject(result.toString());
 
                     JSONArray results = jsonObj.getJSONArray("results");
@@ -144,14 +143,14 @@ public class MatchingActivity extends AppCompatActivity   {
                         e_id = r.getString("_id");
                         String username = r.getString("username");
 
-                        String birthdate = jsonObj.getString("birthdate");
+                        String birthdate = r.getString("birthdate");
                         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault());
                         Date bdate = dateformat.parse(birthdate);
                         int age = getAge(bdate);
 
-                        String gender = jsonObj.getString("gender");
+                        String gender = r.getString("gender");
                         String age_gender =  age + ", " + gender;
-                        String residence = jsonObj.getString("residence");
+                        String residence = r.getString("residence");
 
                         HashMap<String, String> match = new HashMap<>();
 
