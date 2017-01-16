@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
+        <dex dex="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-23.4.0_50084e21e92296cca0b28ca5dadf436943eade5a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
+        <dex dex="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.4.0_155204f9bce16b4315d3efb4337cafbef8f54db1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.6.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="bd11b3899f275668a9355f19cea2c2320f5f9d14">
+        <dex dex="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-common-9.6.0_11c0f9b480f66c870c7d482f32d91e8644f8b141.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/9.6.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="93a0248fe0524b4fa2d16f5f7c3cff8452796454">
+        <dex dex="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-base-9.6.0_445fbefab8a5abb38662d27a1d210df22fc6da13.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/9.6.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="ba2f029ff37297295d2d197ac6e957b361bfccaf">
+        <dex dex="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-appindexing-9.6.0_1dd9843949594b7a4d6b4a4f043ad856207b4bce.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/exploded-aar/com.android.support/design/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
+        <dex dex="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/pre-dexed/debug/com.android.support-design-23.4.0_8db72adc814813657bacad0755e033a18fc77bee.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="2f7e6e2dad1bccaf68a8820820adc6c0d5b96d37">
+        <dex dex="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-24.0.0_33709c92ccc6feee73d730e0e8f4b5885cc3e772.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
+        <dex dex="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-23.4.0_bc2d2640a29e378cd1863f5f81f5e954c8299331.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vanakh/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/24.0.0/support-annotations-24.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="2943c74db6d4346ab8c6531adac91fa05c137c40">
+        <dex dex="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/pre-dexed/debug/support-annotations-24.0.0_10821f5fe39dd05311d0f27fbedf87fd0eb51d62.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/9.6.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="a9f41e6463de88c3f979d796382fc24fb7e9cd41">
+        <dex dex="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-analytics-9.6.0_80735d387e1815a3c56707f0b52c871b23e80da7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/9.6.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="614b2ffd04818e865e1c02cc149c6b92e518e862">
+        <dex dex="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-tasks-9.6.0_49ab38716bf82bb9dd780a3cbedf8d8bdc224fa1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/9.6.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="74d1712880eb2b4ab37ddf3c6a3232c883756726">
+        <dex dex="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-analytics-impl-9.6.0_0d7f63400f7b3e3728389d222fae2e02cca90df2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/libs/internal_impl-24.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="fcaf463e10e69c1923ccf1edeba3b4196d239e00">
+        <dex dex="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/pre-dexed/debug/internal_impl-24.0.0_d0a8a5c0e07f05c0388340a23aea2497264c962b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/exploded-aar/com.google.firebase/firebase-messaging/9.6.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="a93aa431de60b775c91158433f3c687f1d32cb9c">
+        <dex dex="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-messaging-9.6.0_da156c681cc6883bb865340c513da72b3ca9b50c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/9.6.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="d39f676be8400123523882d189a1d84040d34339">
+        <dex dex="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/pre-dexed/debug/com.google.firebase-firebase-iid-9.6.0_1da1eecc75555aa653ba1cac73e628123672ed79.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
+        <dex dex="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-23.4.0_2cd236237703ed5a8e73601ad715902822b63f9c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.6.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="f6afcfbf1989631424f9ceaae6ee24777d3cf6ba">
+        <dex dex="/Users/vanakh/Documents/EISWS1617CheaReimringer/BikeFriends/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-basement-9.6.0_08b8cde9b2cfdab404b021a3a1f7a9db2221011a.jar" />
+    </item>
+
+</items>
