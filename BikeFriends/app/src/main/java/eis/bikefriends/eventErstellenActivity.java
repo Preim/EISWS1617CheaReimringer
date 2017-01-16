@@ -78,7 +78,7 @@ public class eventErstellenActivity extends AppCompatActivity implements View.On
         assert eventAbbr != null;
         //eventAbbr.setOnClickListener(..); //entfernt, siehe in onClick
 
-        //Toolbar back
+        //Toolbar
         if(getSupportActionBar()!=null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -86,7 +86,7 @@ public class eventErstellenActivity extends AppCompatActivity implements View.On
         }
     }
 
-    //Toolbar back
+    //Toolbar back Button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId()==android.R.id.home)
